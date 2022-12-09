@@ -1,15 +1,23 @@
 import "./LoginPage.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import authService from "../../services/auth.service";
 
-import { Button, Form, FormGroup, Alert } from "react-bootstrap";
+import { Button, Form, FormGroup, Toast, Overlay, Card } from "react-bootstrap";
+import AuthFormSide from "../../components/AuthFormSide";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [showError, setShowError] = useState(false);
+  const target = useRef(null);
+
+  const toggleShowError = () => {
+    setShowError(!showError);
+    setErrorMessage(undefined);
+  }
 
   const navigate = useNavigate();
 
@@ -47,30 +55,54 @@ function LoginPage() {
   };
 
   return (
-    <div className="LoginPage">
-      <h1>Login</h1>
-      <Form onSubmit={handleLoginSubmit} className="w-25 m-auto mb-4">
-        <FormGroup className="mb-3 text-start" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" value={email} onChange={handleEmail}/>
-        </FormGroup>
+    <div className="LoginPage d-flex align-items-center"
+      style={{height: "90vh"}}
+    >
+      <Card
+        style={{height: "50vh"}}
+        className="m-auto flex-row shadow"
+      >
+        <AuthFormSide/>
+        <Card.Body>
+          <h3 className="text-start">Log In</h3>
+          <Form onSubmit={handleLoginSubmit} className="mb-4">
+            <FormGroup className="mb-3 text-start" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" value={email} onChange={handleEmail}/>
+            </FormGroup>
 
-        <FormGroup className="mb-3 text-start" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={handlePassword}
-          />
-        </FormGroup>
-        <Button variant="primary" type="submit">
-          Login
-        </Button>
-      </Form>
+            <FormGroup className="mb-3 text-start" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={handlePassword}
+              />
+            </FormGroup>
+            <Button
+              variant="primary"
+              type="submit"
+              ref={target}
+              onClick={() => setShowError(!showError)}
+            >
+              Login
+            </Button>
+          </Form>
+          <p>Don't have an account yet?</p>
+          <Link to={"/signup"}>Sign Up</Link>
+        </Card.Body>
+      </Card>
 
-      {errorMessage && <Alert variant="danger" className="w-25 m-auto">{errorMessage}</Alert>}
-      <p>Don't have an account yet?</p>
-      <Link to={"/signup"}> Sign Up</Link>
+      {errorMessage &&
+        <Overlay target={target.current} show={showError} placement="bottom">
+        <Toast bg="danger" show={showError} onClose={toggleShowError}>
+          <Toast.Header>
+            <strong className="me-auto">Log-In Error</strong>
+          </Toast.Header>
+          <Toast.Body>{errorMessage}</Toast.Body>
+        </Toast>
+      </Overlay>
+      }
     </div>
   );
 }

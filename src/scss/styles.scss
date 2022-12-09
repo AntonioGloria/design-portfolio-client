@@ -11,4 +11,13 @@ $alert-bg-scale: 40%;
 $alert-color-scale: 30%;
 $alert-border-scale: 20%;
 
+$input-bg: $gray-600;
+$input-focus-bg: $input-bg;
+
+$input-color: $white;
+$input-focus-color: $white;
+$input-border-width: 0;
+
+$card-bg: $gray-700;
+
 @import "../../node_modules/bootstrap/scss/bootstrap";

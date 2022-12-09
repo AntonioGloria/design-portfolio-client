@@ -1,15 +1,23 @@
 import "./SignupPage.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
 
-import { Button, Form, FormGroup } from "react-bootstrap";
+import { Button, Form, FormGroup, Toast, Overlay, Card } from "react-bootstrap";
+import AuthFormSide from "../../components/AuthFormSide";
 
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [showError, setShowError] = useState(false);
+  const target = useRef(null);
+
+  const toggleShowError = () => {
+    setShowError(!showError);
+    setErrorMessage(undefined);
+  }
 
   const navigate = useNavigate();
 
@@ -48,35 +56,59 @@ function SignupPage() {
   };
 
   return (
-    <div className="SignupPage">
-      <h1>Sign Up</h1>
+    <div className="SignupPage d-flex align-items-center"
+      style={{height: "90vh"}}
+    >
+      <Card
+        style={{height: "50vh"}}
+        className="m-auto flex-row shadow"
+      >
+        <AuthFormSide/>
+        <Card.Body>
+          <h3 className="text-start">Sign Up</h3>
+          <Form onSubmit={handleSignupSubmit} className="mb-4">
+            <FormGroup className="mb-3 text-start" controlId="formBasicUsername">
+              <Form.Label>Username</Form.Label>
+              <Form.Control type="text" value={name} onChange={handleName}/>
+            </FormGroup>
+            <FormGroup className="mb-3 text-start" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" value={email} onChange={handleEmail}/>
+            </FormGroup>
 
-      <Form onSubmit={handleSignupSubmit} className="w-25 m-auto mb-4">
-        <FormGroup className="mb-3 text-start" controlId="formBasicUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control type="text" value={name} onChange={handleName}/>
-        </FormGroup>
-        <FormGroup className="mb-3 text-start" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" value={email} onChange={handleEmail}/>
-        </FormGroup>
+            <FormGroup className="mb-3 text-start" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={handlePassword}
+              />
+            </FormGroup>
+            <Button
+              variant="primary"
+              className="bg-gradient"
+              type="submit"
+              ref={target}
+              onClick={() => setShowError(!showError)}
+            >
+              Sign Up
+            </Button>
+          </Form>
+          <p>Already have account?</p>
+          <Link to={"/login"}>Log In</Link>
+        </Card.Body>
+      </Card>
 
-        <FormGroup className="mb-3 text-start" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={handlePassword}
-          />
-        </FormGroup>
-        <Button variant="primary" className="bg-gradient" type="submit">
-          Sign Up
-        </Button>
-      </Form>
-
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+      {errorMessage &&
+        <Overlay target={target.current} show={showError} placement="bottom">
+        <Toast bg="danger" show={showError} onClose={toggleShowError}>
+          <Toast.Header>
+            <strong className="me-auto">Sign-Up Error</strong>
+          </Toast.Header>
+          <Toast.Body>{errorMessage}</Toast.Body>
+        </Toast>
+      </Overlay>
+      }
     </div>
   );
 }

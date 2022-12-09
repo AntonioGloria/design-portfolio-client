@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import authService from "../../services/auth.service";
 
-import { Button, Form, FormGroup } from "react-bootstrap";
+import { Button, Form, FormGroup, Alert } from "react-bootstrap";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -49,7 +49,6 @@ function LoginPage() {
   return (
     <div className="LoginPage">
       <h1>Login</h1>
-
       <Form onSubmit={handleLoginSubmit} className="w-25 m-auto mb-4">
         <FormGroup className="mb-3 text-start" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -69,7 +68,7 @@ function LoginPage() {
         </Button>
       </Form>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {errorMessage && <Alert variant="danger" className="w-25 m-auto">{errorMessage}</Alert>}
       <p>Don't have an account yet?</p>
       <Link to={"/signup"}> Sign Up</Link>
     </div>

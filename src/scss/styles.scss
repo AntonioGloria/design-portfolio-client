@@ -1,0 +1,14 @@
+$primary: #20c997;
+
+@import "../../node_modules/bootstrap/scss/_functions.scss";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+
+$body-bg: $gray-800;
+$body-color: $gray-100;
+
+$alert-bg-scale: 40%;
+$alert-color-scale: 30%;
+$alert-border-scale: 20%;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";

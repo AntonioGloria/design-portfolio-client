@@ -69,7 +69,7 @@ function SignupPage() {
             onChange={handlePassword}
           />
         </FormGroup>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" className="bg-gradient" type="submit">
           Sign Up
         </Button>
       </Form>

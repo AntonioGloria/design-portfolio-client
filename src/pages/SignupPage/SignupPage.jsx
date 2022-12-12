@@ -1,6 +1,7 @@
 import "./SignupPage.css";
-import { useState, useRef } from "react";
+import { useState, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/auth.context";
 import authService from "../../services/auth.service";
 
 import { Button, Form, FormGroup, Toast, Overlay, Card } from "react-bootstrap";
@@ -13,6 +14,7 @@ function SignupPage() {
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [showError, setShowError] = useState(false);
   const target = useRef(null);
+  const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const toggleShowError = () => {
     setShowError(!showError);
@@ -45,8 +47,15 @@ function SignupPage() {
     authService
       .signup(requestBody)
       .then((response) => {
-        // If the POST request is successful redirect to the login page
-        navigate("/login");
+        // If the POST request is successful, automatically log in new user and
+        // redirect them to home page
+
+        authService.login({email, password})
+        .then((response) => {
+          storeToken(response.data.authToken);
+          authenticateUser();
+          navigate("/");
+        });
       })
       .catch((error) => {
         // If the request resolves with an error, set the error message in the state

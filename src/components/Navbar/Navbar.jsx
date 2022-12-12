@@ -60,7 +60,7 @@ function Navbar() {
                 <Link
                   to="/profile"
                   className="dropdown-item">
-                  <i class="fa-solid fa-solid fa-user"></i>
+                  <i className="fa-solid fa-solid fa-user"></i>
                   &emsp;View Profile
                 </Link>
                 <Link
@@ -70,7 +70,7 @@ function Navbar() {
                   &emsp;Edit Profile
                 </Link>
                 <NavDropdown.Divider/>
-                <span className="dropdown-item" onClick={logOutUser}><i class="fa-solid fa-right-from-bracket"></i>&emsp;Logout</span>
+                <span className="dropdown-item" onClick={logOutUser}><i className="fa-solid fa-right-from-bracket"></i>&emsp;Logout</span>
               </NavDropdown>
             )}
           </Nav>

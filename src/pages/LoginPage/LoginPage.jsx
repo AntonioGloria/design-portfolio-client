@@ -59,7 +59,6 @@ function LoginPage() {
       style={{height: "90vh"}}
     >
       <Card
-        style={{height: "50vh"}}
         className="m-auto flex-row shadow"
       >
         <AuthFormSide/>
@@ -95,13 +94,13 @@ function LoginPage() {
 
       {errorMessage &&
         <Overlay target={target.current} show={showError} placement="bottom">
-        <Toast bg="danger" show={showError} onClose={toggleShowError}>
-          <Toast.Header>
-            <strong className="me-auto">Log-In Error</strong>
-          </Toast.Header>
-          <Toast.Body>{errorMessage}</Toast.Body>
-        </Toast>
-      </Overlay>
+          <Toast bg="danger" show={showError} onClose={toggleShowError}>
+            <Toast.Header>
+              <strong className="me-auto">Log-In Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorMessage}</Toast.Body>
+          </Toast>
+        </Overlay>
       }
     </div>
   );

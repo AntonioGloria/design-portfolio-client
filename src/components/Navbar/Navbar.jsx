@@ -4,10 +4,8 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 
-import { Navbar as NavBoot } from 'react-bootstrap';
-import { Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar as NavBoot, Container, Nav, NavDropdown } from 'react-bootstrap';
 import JutsuLogo from "../../assets/img/JutsuLogo.svg";
-
 
 function Navbar() {
   // Subscribe to the AuthContext to gain access to
@@ -53,24 +51,28 @@ function Navbar() {
             {isLoggedIn && (
               <NavDropdown menuVariant="dark" title={user &&
                 <>
-                  {user.name}&emsp;
-                  <img src="https://picsum.photos/id/402/200/300" style={{ width: 25, height: 25, borderRadius: 25}} alt="profile"/>&emsp;
+                  {user.username}&emsp;
+                  <img src={user.avatar} style={{ width: 30, height: 30, borderRadius: 25}} alt="avatar"/>&emsp;
                 </>
               }>
                 <Link
-                  to="/profile"
+                  to={`/${user.username}`}
                   className="dropdown-item">
                   <i className="fa-solid fa-solid fa-user"></i>
                   &emsp;View Profile
                 </Link>
                 <Link
-                  to="/edit-profile"
+                  to={`/${user.username}/edit-profile`}
                   className="dropdown-item">
                   <i className="fa-solid fa-pen-to-square"></i>
                   &emsp;Edit Profile
                 </Link>
                 <NavDropdown.Divider/>
-                <span className="dropdown-item" onClick={logOutUser}><i className="fa-solid fa-right-from-bracket"></i>&emsp;Logout</span>
+                <span className="dropdown-item"
+                  onClick={logOutUser}>
+                  <i className="fa-solid fa-right-from-bracket"></i>
+                  &emsp;Logout
+                </span>
               </NavDropdown>
             )}
           </Nav>

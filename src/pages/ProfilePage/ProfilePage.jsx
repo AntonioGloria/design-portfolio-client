@@ -1,14 +1,36 @@
 import "./ProfilePage.css";
-import { useContext } from "react";
-import { AuthContext } from "../../context/auth.context";
+import { useState, useEffect } from "react";
+import userService from "../../services/user.service";
+import { useParams } from "react-router-dom";
 
 function ProfilePage() {
-  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
+  const { username } = useParams();
+  const [userData, setUserData] = useState([]);
+  const {
+    avatar,
+    ownArtworks,
+    ownAlbums,
+    likedArtworks,
+    likedCollections
+  } = userData;
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const res = await userService.getOne(username);
+        setUserData(res.data);
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
+    getUserData();
+  }, [username]);
 
   return (
     <div>
-      <h1>Profile page</h1>
-      <h3>Hello {isLoggedIn && user.name}</h3>
+      <img src={avatar} style={{borderRadius:"50%"}} alt={username}/>
+      <h1>{username}</h1>
     </div>
   );
 }

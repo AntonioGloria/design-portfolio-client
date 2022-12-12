@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 
 import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import EditProfilePage from "./pages/EditProfilePage/EditProfilePage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage"
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 
@@ -16,16 +18,10 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage/>} />
 
-        <Route
-          path="/profile"
-          element={
-            <IsPrivate>
-              <ProfilePage />
-            </IsPrivate>
-          }
-        />
+        <Route path="/:username" element={<ProfilePage/>}/>
+        <Route path="/:username/edit-profile" element={<IsPrivate><EditProfilePage/></IsPrivate>}/>
 
         <Route
           path="/signup"
@@ -43,6 +39,7 @@ function App() {
             </IsAnon>
           }
         />
+        <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </div>
   );

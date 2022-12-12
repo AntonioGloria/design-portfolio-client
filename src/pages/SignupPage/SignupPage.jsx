@@ -10,7 +10,7 @@ import AuthFormSide from "../../components/AuthFormSide";
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [showError, setShowError] = useState(false);
   const target = useRef(null);
@@ -25,12 +25,12 @@ function SignupPage() {
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
-  const handleName = (e) => setName(e.target.value);
+  const handleUsername = (e) => setUsername(e.target.value);
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    const requestBody = { email, password, name };
+    const requestBody = { email, password, username };
 
     // Send a request to the server using axios
     /* 
@@ -69,7 +69,6 @@ function SignupPage() {
       style={{height: "90vh"}}
     >
       <Card
-        style={{height: "50vh"}}
         className="m-auto flex-row shadow"
       >
         <AuthFormSide/>
@@ -78,7 +77,7 @@ function SignupPage() {
           <Form onSubmit={handleSignupSubmit} className="mb-4">
             <FormGroup className="mb-3 text-start" controlId="formBasicUsername">
               <Form.Label>Username</Form.Label>
-              <Form.Control type="text" value={name} onChange={handleName}/>
+              <Form.Control type="text" value={username} onChange={handleUsername}/>
             </FormGroup>
             <FormGroup className="mb-3 text-start" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
@@ -110,13 +109,13 @@ function SignupPage() {
 
       {errorMessage &&
         <Overlay target={target.current} show={showError} placement="bottom">
-        <Toast bg="danger" show={showError} onClose={toggleShowError}>
-          <Toast.Header>
-            <strong className="me-auto">Sign-Up Error</strong>
-          </Toast.Header>
-          <Toast.Body>{errorMessage}</Toast.Body>
-        </Toast>
-      </Overlay>
+          <Toast bg="danger" show={showError} onClose={toggleShowError}>
+            <Toast.Header>
+              <strong className="me-auto">Sign-Up Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorMessage}</Toast.Body>
+          </Toast>
+        </Overlay>
       }
     </div>
   );

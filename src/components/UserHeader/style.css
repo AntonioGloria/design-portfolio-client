@@ -1,0 +1,21 @@
+.header-main {
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: auto, cover;
+    width: 100%;
+    height: 360px;
+}
+
+.name-tag {
+    float: left;
+    position: relative;
+    top: 60%;
+    left: 2%;
+}
+
+.avatar {
+    border-radius: 0.5em;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}

@@ -2,12 +2,14 @@ import "./ProfilePage.css";
 import { useState, useEffect } from "react";
 import userService from "../../services/user.service";
 import { useParams } from "react-router-dom";
+import UserHeader from "../../components/UserHeader";
 
 function ProfilePage() {
   const { username } = useParams();
   const [userData, setUserData] = useState([]);
   const {
     avatar,
+    coverImg,
     ownArtworks,
     ownAlbums,
     likedArtworks,
@@ -28,10 +30,7 @@ function ProfilePage() {
   }, [username]);
 
   return (
-    <div>
-      <img src={avatar} style={{borderRadius:"50%"}} alt={username}/>
-      <h1>{username}</h1>
-    </div>
+    <UserHeader username={username} avatar={avatar} coverImg={coverImg}/>
   );
 }
 

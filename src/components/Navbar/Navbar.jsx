@@ -55,8 +55,8 @@ function Navbar() {
                 </>
               }
             >
-              <Link to='/' className="dropdown-item">Drawing</Link>
-              <Link to='/' className="dropdown-item">Painting</Link>
+              <Link to='/' className="dropdown-item">Digital Drawing</Link>
+              <Link to='/' className="dropdown-item">Digital Painting</Link>
               <Link to='/' className="dropdown-item">3D Art</Link>
             </NavDropdown>
 
@@ -101,6 +101,13 @@ function Navbar() {
                   <img src={user.avatar} style={{ width: 30, height: 30, borderRadius: 25}} alt="avatar"/>&emsp;
                 </>
               }>
+                <Link
+                  to={`/${user.username}/create-artwork`}
+                  className="dropdown-item">
+                  <sup><i className="fa-solid fa-plus"></i></sup>
+                  <sub><i className="fa-solid fa-image"></i></sub>
+                  &emsp;New Project
+                </Link>
                 <Link
                   to={`/${user.username}`}
                   className="dropdown-item">

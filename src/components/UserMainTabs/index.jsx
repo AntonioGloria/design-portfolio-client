@@ -26,13 +26,13 @@ const UserMainTabs = (props) => {
         eventKey="portfolio"
         title={<><i className="fa-solid fa-images"></i>&emsp;Portfolio</>}
       >
-        <Gallery items={ownAlbums}/>
+        <Gallery user={username} items={ownAlbums}/>
       </Tab>
       <Tab
         eventKey="favorites"
         title={<><i className="fa-solid fa-star"></i>&emsp;Favorites</>}
       >
-        <Gallery items={favCollections}/>
+        <Gallery user={username} items={favCollections}/>
       </Tab>
       <Tab
         eventKey="about"

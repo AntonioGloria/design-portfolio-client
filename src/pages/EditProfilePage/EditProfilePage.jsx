@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 import userService from "../../services/user.service";
-import { Button, Form, FormGroup, FormLabel, Card, Row, Col } from "react-bootstrap";
+import { Button, Form, Card, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const EditProfilePage = () => {
@@ -80,11 +80,11 @@ const EditProfilePage = () => {
             <Col className="text-start">
               <Card>
                 <Card.Body>
-                  <FormGroup controlId="tagline-text" className="mb-3">
+                  <Form.Group controlId="tagline-text" className="mb-3">
                     <Form.Label>Your Tagline:</Form.Label>
                     <Form.Control type="text" value={newTagline} onChange={(e) => setNewTagline(e.target.value)}/>
-                  </FormGroup>
-                  <FormGroup controlId="bio-textarea">
+                  </Form.Group>
+                  <Form.Group controlId="bio-textarea">
                     <Form.Label>Your Bio:</Form.Label>
                     <Form.Control
                       as="textarea"
@@ -93,38 +93,38 @@ const EditProfilePage = () => {
                       value={newBio}
                       onChange={(e) => setNewBio(e.target.value)}
                     />
-                  </FormGroup>
+                  </Form.Group>
                 </Card.Body>
               </Card>
             </Col>
 
             <Col>
-              <FormGroup controlId="avatarFile" className="m-1">
+              <Form.Group controlId="avatarFile" className="m-1">
                 <Card>
                   <Card.Header>
-                    <FormLabel>Change Avatar</FormLabel>
+                    <Form.Label>Change Avatar</Form.Label>
                   </Card.Header>
                   <Card.Img src={avatarUrl} alt="avatar-img"/>
                   <Card.Body>
-                    <FormLabel className="text-muted">200px × 200px</FormLabel>
+                    <Form.Label className="text-muted">200px × 200px</Form.Label>
                     <Form.Control type="file" onChange={handleAvatarUpload}/>
                   </Card.Body>
                 </Card>
-              </FormGroup>
+              </Form.Group>
             </Col>
           </Row>
-          <FormGroup controlId="coverFile" className="m-1">
+          <Form.Group controlId="coverFile" className="m-1">
             <Card>
               <Card.Header>
-                <FormLabel>Change Cover Image</FormLabel>
+                <Form.Label>Change Cover Image</Form.Label>
               </Card.Header>
               <Card.Img src={coverUrl} alt="cover-img"/>
               <Card.Body>
-                <FormLabel className="text-muted">1920px × 360px</FormLabel>
+                <Form.Label className="text-muted">1920px × 360px</Form.Label>
                 <Form.Control type="file" onChange={handleCoverUpload}/>
               </Card.Body>
             </Card>
-          </FormGroup>
+          </Form.Group>
           <Button variant="primary" type="submit" className="mt-2">Update Profile</Button>
         </Form>
         </Card.Body>

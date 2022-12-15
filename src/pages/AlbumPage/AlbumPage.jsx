@@ -1,27 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { Image } from 'react-bootstrap';
 import albumService from '../../services/album.service';
 
 const AlbumPage = () => {
   const { album } = useParams();
-  const [artworks, setArtworks] = useState([]);
+  const [albumData, setAlbumData] = useState({});
+  const { title, artworks } = albumData
 
   useEffect(() => {
-    const getArtworks = async () => {
+    const getAlbumData = async () => {
       try {
         const res = await albumService.getOne(album);
-        setArtworks(res.data.artworks);
+        setAlbumData(res.data);
       }
       catch (err) {
         console.log(err);
       }
     }
-    getArtworks();
+    getAlbumData();
   }, [album]);
 
   return (
-    <div>
-      {artworks?.map(artwork => <img src={artwork.assets[0] } alt={artwork.title}/>)}
+    <div className="m-auto text-center">
+      <h1>{title}</h1>
+      {artworks?.map(({ _id, assets }) =>
+        <Link to={`/artworks/${_id}`} key={_id}>
+          <Image
+            thumbnail={true}
+            src={assets[0]}
+            style={{width:"200px", height:"200px", objectFit:"cover"}}
+          />
+        </Link>
+      )}
     </div>
   );
 }

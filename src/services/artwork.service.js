@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-class AlbumService {
+class ArtworkService {
   constructor() {
     this.api = axios.create({
       baseURL: process.env.REACT_APP_SERVER_URL || "http://localhost:5005"
@@ -19,18 +19,18 @@ class AlbumService {
     });
   }
 
-  // GET /albums
+  // GET all artworks
   getAll = async () => {
-    return this.api.get('/albums');
+    return this.api.get('/artworks');
   }
 
-  // GET /:id
+  // GET artwork by id
   getOne = async (id) => {
-    return this.api.get(`/albums/${id}`);
+    return this.api.get(`/artworks/${id}`);
   }
 }
 
 // Create one instance of the service
-const albumService = new AlbumService();
+const artworkService = new ArtworkService();
 
-export default albumService;
+export default artworkService;

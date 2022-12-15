@@ -2,8 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/auth.context';
 import { Button, Card, Form, Row, Col } from 'react-bootstrap';
 import userService from '../../services/user.service';
+import { useNavigate } from 'react-router-dom';
 
 const CreateArtworkPage = () => {
+  const navigate = useNavigate();
+
   const { user } = useContext(AuthContext);
   const [userAlbums, setUserAlbums] = useState([]);
   const [mediumOptions, setMediumOptions] = useState([]);
@@ -79,12 +82,37 @@ const CreateArtworkPage = () => {
     setAlbums(selectedValues);
   }
 
+  const handleAssetUploads = async (e) => {
+    try {
+      const uploadData = new FormData();
+      const fileList = e.target.files;
+
+      for (const file of fileList) {
+        uploadData.append("imageUrl", file);
+      };
+
+      const res = await userService.uploadImageMulti(uploadData);
+      setAssets(res.data.fileUrls);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log({
-        title, description, category, medium, albums
+      const newArtwork = await userService.createArtwork(user.username, {
+        title,
+        author: user._id,
+        description,
+        category,
+        medium,
+        albums,
+        assets
       });
+      navigate(`/artworks/${newArtwork._id}`, newArtwork);
+
     }
     catch (err) {
       console.log(err);
@@ -159,7 +187,7 @@ const CreateArtworkPage = () => {
 
           <Form.Group controlId="assets-file">
             <Form.Label>{"Upload Artwork Image(s)"}</Form.Label>
-            <Form.Control type="file" multiple />
+            <Form.Control type="file" multiple onChange={handleAssetUploads}/>
           </Form.Group>
 
           <Form.Group controlId="album-select">

@@ -27,4 +27,11 @@ $nav-tabs-border-radius: 0;
 $nav-tabs-link-active-bg: $gray-700;
 $nav-tabs-link-active-color: $primary;
 
+$form-select-bg: $gray-600;
+$form-select-color: $white;
+$form-select-border-width: 0;
+
+$form-file-button-bg: $primary;
+$form-file-button-hover-bg: shade-color($form-file-button-bg, 5%);
+
 @import "../../node_modules/bootstrap/scss/bootstrap";

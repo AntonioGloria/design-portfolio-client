@@ -1,11 +1,11 @@
 import React from 'react'
-import { Card } from "react-bootstrap"
+import { Card, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 const Gallery = (props) => {
   const { user, items } = props;
   return (
-    <div>
+    <div className='d-flex'>
       {items?.map(item =>
         <Link
           key={item._id}

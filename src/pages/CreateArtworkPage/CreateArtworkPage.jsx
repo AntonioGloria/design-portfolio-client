@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/auth.context';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card, Form, Row, Col } from 'react-bootstrap';
 import userService from '../../services/user.service';
 
 const CreateArtworkPage = () => {
@@ -12,7 +12,8 @@ const CreateArtworkPage = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [medium, setMedium] = useState("");
-  const [album, setAlbum] = useState("")
+  const [albums, setAlbums] = useState([]);
+  const [assets, setAssets] = useState([]);
 
   const physOptions = [
     {value: "physDrawing", text : "Drawing"},
@@ -64,11 +65,25 @@ const CreateArtworkPage = () => {
     getAlbums();
   },[user]);
 
+  const handleSelectAlbums = (e) => {
+    const allOptions = [...e.target.children];
+
+    const selected = allOptions.filter(option => {
+      return option.selected;
+    });
+
+    const selectedValues = selected.map(selected => {
+      return selected.value;
+    });
+
+    setAlbums(selectedValues);
+  }
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       console.log({
-        title, description, category, medium, album
+        title, description, category, medium, albums
       });
     }
     catch (err) {
@@ -77,37 +92,60 @@ const CreateArtworkPage = () => {
   }
 
   return (
-    <Card className="w-75 m-auto mt-5">
+    <Card className="w-75 m-auto mt-5 shadow">
       <Card.Header className="text-center">
         <h4>Create Artwork</h4>
       </Card.Header>
+
       <Card.Body>
         <Form onSubmit={handleSubmit} encType="multipart/form-data">
+          <Row>
+          <Col>
           <Form.Group controlId="title-text">
-            <Form.Label>Artwork Title</Form.Label>
-            <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+            <Card>
+              <Card.Header>
+                <Form.Label>Artwork Title</Form.Label>
+              </Card.Header>
+              <Card.Body>
+                <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+              </Card.Body>
+            </Card>
           </Form.Group>
 
           <Form.Group controlId="category-select">
-            <Form.Label>Category</Form.Label>
-            <Form.Select value={category} onChange={(e) => handleCategory(e)}>
-              <option>Choose Category...</option>
-              <option value="physicalMedia">Physical Media</option>
-              <option value="digitalMedia">Digital Media</option>
-              <option value="photography">Photography</option>
-            </Form.Select>
+            <Card>
+              <Card.Header>
+                <Form.Label>Category</Form.Label>
+              </Card.Header>
+              <Card.Body>
+                <Form.Select value={category} onChange={(e) => handleCategory(e)}>
+                  <option>Choose Category...</option>
+                  <option value="physicalMedia">Physical Media</option>
+                  <option value="digitalMedia">Digital Media</option>
+                  <option value="photography">Photography</option>
+                </Form.Select>
+              </Card.Body>
+            </Card>
           </Form.Group>
 
           <Form.Group controlId="medium-select">
-            <Form.Label>Medium</Form.Label>
-            <Form.Select value={medium} onChange={(e) => setMedium(e.target.value)}>
-              <option>Choose Medium...</option>
-              { mediumOptions.map(option =>
-                  <option key={option.value} value={option.value}>{option.text}</option>
-              )}
-            </Form.Select>
+            <Card>
+              <Card.Header>
+                <Form.Label>Medium</Form.Label>
+              </Card.Header>
+              <Card.Body>
+                <Form.Select value={medium} onChange={(e) => setMedium(e.target.value)}>
+                  <option>Choose Medium...</option>
+                  { mediumOptions.map(option =>
+                      <option key={option.value} value={option.value}>{option.text}</option>
+                  )}
+                </Form.Select>
+              </Card.Body>
+            </Card>
           </Form.Group>
+          </Col>
 
+          <Col>
           <Form.Group controlId="description-textarea">
             <Form.Label>Artwork Description</Form.Label>
             <Form.Control
@@ -126,13 +164,14 @@ const CreateArtworkPage = () => {
 
           <Form.Group controlId="album-select">
             <Form.Label>Album</Form.Label>
-            <Form.Select value={album} onChange={(e) => setAlbum(e.target.value)}>
-              <option>Choose Album...</option>
+            <Form.Select multiple={true} onChange={(e) => handleSelectAlbums(e)}>
               { userAlbums.map(album =>
                   <option key={album._id} value={album._id}>{album.title}</option>
               )}
             </Form.Select>
           </Form.Group>
+          </Col>
+          </Row>
           <Button variant="primary" type="submit">Create Artwork</Button>
         </Form>
       </Card.Body>

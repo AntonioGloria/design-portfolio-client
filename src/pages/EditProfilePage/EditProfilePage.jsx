@@ -70,63 +70,69 @@ const EditProfilePage = () => {
     <div className="d-flex align-items-center"
       style={{height: "90vh"}}
     >
-      <Card className="w-25 m-auto text-center shadow">
+      <Card className="m-auto text-center shadow">
         <Card.Header>
           <h2>Edit Profile</h2>
         </Card.Header>
         <Card.Body>
-        <Form onSubmit={handleSubmit} encType="multipart/form-data">
-          <Row>
-            <Col className="text-start">
-              <Card>
-                <Card.Body>
-                  <Form.Group controlId="tagline-text" className="mb-3">
-                    <Form.Label>Your Tagline:</Form.Label>
-                    <Form.Control type="text" value={newTagline} onChange={(e) => setNewTagline(e.target.value)}/>
-                  </Form.Group>
-                  <Form.Group controlId="bio-textarea">
-                    <Form.Label>Your Bio:</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows={7}
-                      style={{resize:"none"}}
-                      value={newBio}
-                      onChange={(e) => setNewBio(e.target.value)}
-                    />
-                  </Form.Group>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col>
-              <Form.Group controlId="avatarFile" className="m-1">
-                <Card>
-                  <Card.Header>
-                    <Form.Label>Change Avatar</Form.Label>
-                  </Card.Header>
-                  <Card.Img src={avatarUrl} alt="avatar-img"/>
+          <Form onSubmit={handleSubmit} encType="multipart/form-data">
+            <Row>
+              <Col className="text-start">
+                <Card className="m-2">
                   <Card.Body>
-                    <Form.Label className="text-muted">200px × 200px</Form.Label>
-                    <Form.Control type="file" onChange={handleAvatarUpload}/>
+                    <Form.Group controlId="tagline-text">
+                      <Form.Label>Your Tagline:</Form.Label>
+                      <Form.Control type="text" value={newTagline} onChange={(e) => setNewTagline(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group controlId="bio-textarea" className="mt-3">
+                      <Form.Label>Your Bio:</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={7}
+                        style={{resize:"none"}}
+                        value={newBio}
+                        onChange={(e) => setNewBio(e.target.value)}
+                      />
+                    </Form.Group>
                   </Card.Body>
                 </Card>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Form.Group controlId="coverFile" className="m-1">
-            <Card>
-              <Card.Header>
-                <Form.Label>Change Cover Image</Form.Label>
-              </Card.Header>
-              <Card.Img src={coverUrl} alt="cover-img"/>
-              <Card.Body>
-                <Form.Label className="text-muted">1920px × 360px</Form.Label>
-                <Form.Control type="file" onChange={handleCoverUpload}/>
-              </Card.Body>
-            </Card>
-          </Form.Group>
-          <Button variant="primary" type="submit" className="mt-2">Update Profile</Button>
-        </Form>
+              </Col>
+              <Col>
+                <Card className="m-2 align-middle">
+                  <Form.Group controlId="avatarFile">
+                    <Card.Header>
+                      <Form.Label>Change Avatar <em className="text-muted">100px × 100px</em></Form.Label>
+                    </Card.Header>
+                    <Card.Img src={avatarUrl} alt="avatar-img" style={{width:"100px"}} className="m-auto mt-3"/>
+                    <Card.Body>
+                      <Form.Control type="file" onChange={handleAvatarUpload}/>
+                    </Card.Body>
+                  </Form.Group>
+                </Card>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+              <Card className="m-3">
+                <Form.Group controlId="coverFile">
+                  <Card.Header>
+                    <Form.Label>Change Cover Image <em className="text-muted">1920px × 360px</em></Form.Label>
+                  </Card.Header>
+                  <Card.Img
+                    src={coverUrl}
+                    alt="cover-img"
+                    style={{width:"480px", height:"90px", objectFit:"fill"}}
+                    className="m-auto"
+                  />
+                  <Card.Body>
+                    <Form.Control type="file" onChange={handleCoverUpload}/>
+                  </Card.Body>
+                </Form.Group>
+              </Card>
+              </Col>
+            </Row>
+            <Button variant="primary" type="submit" className="mt-2">Update Profile</Button>
+          </Form>
         </Card.Body>
       </Card>
     </div>

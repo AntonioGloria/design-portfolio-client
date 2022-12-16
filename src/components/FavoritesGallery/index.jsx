@@ -15,7 +15,7 @@ const FavoritesGallery = (props) => {
         >
         <Card className="m-4 shadow text-center" style={{width:"200px"}}>
           <Card.Img
-            src="https://res.cloudinary.com/dwhznw5ny/image/upload/v1671064095/design-portfolio/ui-defaults/defaultAlbum_zgve7a.png"
+            src="https://res.cloudinary.com/dwhznw5ny/image/upload/v1671209665/design-portfolio/ui-defaults/defaultAlbum_qgieye.png"
           />
           <Card.Footer>
             {album.title}

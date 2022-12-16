@@ -12,6 +12,7 @@ const AlbumGallery = (props) => {
           key={album._id}
           to={`/${user}/albums/${album._id}`}
           state={{gallery: album}}
+          className="text-decoration-none"
         >
         <Card className="m-4 shadow text-center" style={{width:"200px"}}>
           <Card.Img

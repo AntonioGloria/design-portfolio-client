@@ -14,13 +14,13 @@ $alert-border-scale: 20%;
 $input-bg: $gray-600;
 $input-focus-bg: $input-bg;
 
-$input-color: $white;
-$input-focus-color: $white;
+$input-color: $body-color;
+$input-focus-color: $body-color;
 $input-border-width: 0;
 
 $card-bg: $gray-700;
 
-$nav-link-color: $white;
+$nav-link-color: $body-color;
 $nav-tabs-border-width: 0;
 $nav-tabs-border-radius: 0;
 
@@ -28,10 +28,12 @@ $nav-tabs-link-active-bg: $gray-700;
 $nav-tabs-link-active-color: $primary;
 
 $form-select-bg: $gray-600;
-$form-select-color: $white;
+$form-select-color: $body-color;
 $form-select-border-width: 0;
 
 $form-file-button-bg: $primary;
 $form-file-button-hover-bg: shade-color($form-file-button-bg, 5%);
+
+$carousel-control-icon-width: 4rem;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";

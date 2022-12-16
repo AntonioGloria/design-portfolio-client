@@ -122,85 +122,106 @@ const CreateArtworkPage = () => {
   return (
     <Card className="w-75 m-auto mt-5 shadow">
       <Card.Header className="text-center">
-        <h4>Create Artwork</h4>
+        <h4>New Artwork</h4>
       </Card.Header>
 
       <Card.Body>
         <Form onSubmit={handleSubmit} encType="multipart/form-data">
           <Row>
-          <Col>
-          <Form.Group controlId="title-text">
-            <Card>
-              <Card.Header>
-                <Form.Label>Artwork Title</Form.Label>
-              </Card.Header>
-              <Card.Body>
-                <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
-              </Card.Body>
+            <Col>
+              <Card className="m-3">
+                <Form.Group controlId="title-text">
+                  <Card.Header>
+                    <Form.Label>Artwork Title</Form.Label>
+                  </Card.Header>
+                  <Card.Body>
+                    <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                  </Card.Body>
+                </Form.Group>
+              </Card>
+
+              <Card className="m-3">
+                <Form.Group controlId="assets-file">
+                  <Card.Header>
+                    <Form.Label>{"Upload Artwork Image(s)"}</Form.Label>
+                  </Card.Header>
+                  <Card.Body>
+                    <Form.Control type="file" multiple onChange={handleAssetUploads}/>
+                  </Card.Body>
+                </Form.Group>
+              </Card>
+
+              <Card className="m-3">
+                <Form.Group controlId="description-textarea">
+                  <Card.Header>
+                    <Form.Label>Artwork Description</Form.Label>
+                  </Card.Header>
+                  <Card.Body>
+                    <Form.Control
+                      as="textarea"
+                      rows={4}
+                      style={{resize:"none"}}
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                  </Card.Body>
+                </Form.Group>
+              </Card>
+            </Col>
+
+            <Col>
+              <Card className="m-3">
+                <Form.Group controlId="category-select">
+                  <Card.Header>
+                    <Form.Label>Category</Form.Label>
+                  </Card.Header>
+                  <Card.Body>
+                    <Form.Select value={category} onChange={(e) => handleCategory(e)}>
+                      <option>Choose Category...</option>
+                      <option value="physicalMedia">Physical Media</option>
+                      <option value="digitalMedia">Digital Media</option>
+                      <option value="photography">Photography</option>
+                    </Form.Select>
+                  </Card.Body>
+                </Form.Group>
+              </Card>
+
+              <Card className="m-3">
+                <Form.Group controlId="medium-select">
+                  <Card.Header>
+                    <Form.Label>Medium</Form.Label>
+                  </Card.Header>
+                  <Card.Body>
+                    <Form.Select value={medium} onChange={(e) => setMedium(e.target.value)}>
+                      <option>Choose Medium...</option>
+                      { mediumOptions.map(option =>
+                          <option key={option.value} value={option.value}>{option.text}</option>
+                      )}
+                    </Form.Select>
+                  </Card.Body>
+                </Form.Group>
+              </Card>
+
+            <Card className="m-3">
+              <Form.Group controlId="album-select">
+                <Card.Header>
+                  <Form.Label>Album</Form.Label>
+                </Card.Header>
+                <Card.Body>
+                  <Form.Select multiple={true} onChange={(e) => handleSelectAlbums(e)}>
+                    { userAlbums.map(album =>
+                        <option key={album._id} value={album._id}>{album.title}</option>
+                    )}
+                  </Form.Select>
+                </Card.Body>
+              </Form.Group>
             </Card>
-          </Form.Group>
 
-          <Form.Group controlId="category-select">
-            <Card>
-              <Card.Header>
-                <Form.Label>Category</Form.Label>
-              </Card.Header>
-              <Card.Body>
-                <Form.Select value={category} onChange={(e) => handleCategory(e)}>
-                  <option>Choose Category...</option>
-                  <option value="physicalMedia">Physical Media</option>
-                  <option value="digitalMedia">Digital Media</option>
-                  <option value="photography">Photography</option>
-                </Form.Select>
-              </Card.Body>
-            </Card>
-          </Form.Group>
-
-          <Form.Group controlId="medium-select">
-            <Card>
-              <Card.Header>
-                <Form.Label>Medium</Form.Label>
-              </Card.Header>
-              <Card.Body>
-                <Form.Select value={medium} onChange={(e) => setMedium(e.target.value)}>
-                  <option>Choose Medium...</option>
-                  { mediumOptions.map(option =>
-                      <option key={option.value} value={option.value}>{option.text}</option>
-                  )}
-                </Form.Select>
-              </Card.Body>
-            </Card>
-          </Form.Group>
-          </Col>
-
-          <Col>
-          <Form.Group controlId="description-textarea">
-            <Form.Label>Artwork Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={5}
-              style={{resize:"none"}}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="assets-file">
-            <Form.Label>{"Upload Artwork Image(s)"}</Form.Label>
-            <Form.Control type="file" multiple onChange={handleAssetUploads}/>
-          </Form.Group>
-
-          <Form.Group controlId="album-select">
-            <Form.Label>Album</Form.Label>
-            <Form.Select multiple={true} onChange={(e) => handleSelectAlbums(e)}>
-              { userAlbums.map(album =>
-                  <option key={album._id} value={album._id}>{album.title}</option>
-              )}
-            </Form.Select>
-          </Form.Group>
-          </Col>
+            </Col>
           </Row>
-          <Button variant="primary" type="submit">Create Artwork</Button>
+          <Form.Group className="text-center">
+            <Button variant="primary" type="submit">Create Artwork</Button>
+          </Form.Group>
         </Form>
       </Card.Body>
     </Card>

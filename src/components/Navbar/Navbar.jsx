@@ -19,7 +19,7 @@ function Navbar() {
   }
 
   return (
-    <NavBoot sticky="top" variant="dark" bg="dark" expand="lg">
+    <NavBoot sticky="top" variant="dark" bg="dark" expand="lg" className="border-bottom border-secondary border-opacity-25">
       <Container fluid={true}>
         <NavBoot.Toggle aria-controls="basic-navbar-nav"/>
         <NavBoot.Collapse id="basic-navbar-nav" className="d-flex justify-content-between">

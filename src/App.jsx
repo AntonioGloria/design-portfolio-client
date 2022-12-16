@@ -26,7 +26,7 @@ function App() {
         <Route path="/:username/*" element={<ProfilePage/>}/>
         <Route path="/:username/edit-profile" element={<IsPrivate><EditProfilePage/></IsPrivate>}/>
         <Route path="/:username/create-artwork" element={<CreateArtworkPage/>}/>
-        <Route path="/artworks/:artwork" element={<ArtworkDetailsPage/>}/>
+        <Route path="/artworks/:_id" element={<ArtworkDetailsPage/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </div>

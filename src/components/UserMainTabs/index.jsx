@@ -5,6 +5,7 @@ import AlbumGallery from "../AlbumGallery";
 import ArtworkGallery from "../ArtworkGallery";
 import FavoritesGallery from "../FavoritesGallery";
 import UserBioCard from "../../components/UserBioCard";
+import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
 const UserMainTabs = (props) => {
   const {
@@ -30,6 +31,7 @@ const UserMainTabs = (props) => {
         <Routes>
             <Route path="/" element={<AlbumGallery user={username} albums={ownAlbums}/>}/>
             <Route path="/albums/:album" element={<ArtworkGallery/>}/>
+            <Route path="*" element={<NotFoundPage/>}/>
           </Routes>
       </Tab>
       <Tab
@@ -39,6 +41,7 @@ const UserMainTabs = (props) => {
         <Routes>
           <Route path="/" element={<FavoritesGallery user={username} albums={favCollections}/>}/>
           <Route path="/favorites/:album" element={<ArtworkGallery/>}/>
+          <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       </Tab>
       <Tab

@@ -111,7 +111,7 @@ const CreateArtworkPage = () => {
         albums,
         assets
       });
-      navigate(`/artworks/${newArtwork._id}`, newArtwork);
+      navigate(`/artworks/${newArtwork.data._id}`);
 
     }
     catch (err) {

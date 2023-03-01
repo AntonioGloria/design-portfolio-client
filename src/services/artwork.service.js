@@ -24,6 +24,16 @@ class ArtworkService {
     return this.api.get('/artworks');
   }
 
+  // GET media categories
+  getCategoryMedia = async (category, medium) => {
+    return this.api.get('/artworks', {
+        params: { category: category,
+                  medium: medium
+                }
+      }
+    );
+  }
+
   // GET artwork by id
   getOne = async (id) => {
     return this.api.get(`/artworks/${id}`);

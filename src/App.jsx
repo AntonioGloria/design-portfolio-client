@@ -9,6 +9,7 @@ import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import CreateArtworkPage from "./pages/CreateArtworkPage/CreateArtworkPage";
 import ArtworkDetailsPage from "./pages/ArtworkDetailsPage/ArtworkDetailsPage";
+import ArtworkGalleryPage from "./pages/ArtworkGalleryPage/ArtworkGalleryPage";
 
 import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
@@ -26,6 +27,7 @@ function App() {
         <Route path="/:username/*" element={<ProfilePage/>}/>
         <Route path="/:username/edit-profile" element={<IsPrivate><EditProfilePage/></IsPrivate>}/>
         <Route path="/:username/create-artwork" element={<CreateArtworkPage/>}/>
+        <Route path="/artworks" element={<ArtworkGalleryPage/>}/>
         <Route path="/artworks/:_id" element={<ArtworkDetailsPage/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>

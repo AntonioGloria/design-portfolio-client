@@ -1,6 +1,4 @@
-import React from 'react';
-import { Card, } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import AlbumCard from '../AlbumCard';
 
 const FavoritesGallery = (props) => {
   const { user, albums } = props;
@@ -8,22 +6,11 @@ const FavoritesGallery = (props) => {
   return (
     <div className='d-flex justify-content-center'>
       {albums?.map(album =>
-        <Link
-          key={album._id}
-          to={`/${user}/favorites/${album._id}`}
-          state={{gallery: album}}
-          className="text-decoration-none"
-        >
-        <Card className="m-4 shadow text-center" style={{width:"200px"}}>
-          <Card.Img
-            src="https://res.cloudinary.com/dwhznw5ny/image/upload/v1671209665/design-portfolio/ui-defaults/defaultAlbum_qgieye.png"
-          />
-          <Card.Footer>
-            {album.title}
-          </Card.Footer>
-        </Card>
-        </Link>
-        )}
+        <AlbumCard
+          album={album}
+          path={`/${user}/favorites/${album._id}`}
+          key={album._id}/>
+      )}
     </div>
   );
 }

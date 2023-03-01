@@ -40,9 +40,10 @@ function Navbar() {
                 </>
               }
             >
-              <Link to='/' className="dropdown-item">Drawing</Link>
-              <Link to='/' className="dropdown-item">Painting</Link>
-              <Link to='/' className="dropdown-item">Sculpture</Link>
+              <Link to='/artworks?category=physicalMedia' className="dropdown-item">All</Link>
+              <Link to='/artworks?category=physicalMedia&medium=physDrawing' className="dropdown-item">Drawing</Link>
+              <Link to='/artworks?category=physicalMedia&medium=physPainting' className="dropdown-item">Painting</Link>
+              <Link to='/artworks?category=physicalMedia&medium=physSculpture' className="dropdown-item">Sculpture</Link>
             </NavDropdown>
 
             <NavDropdown
@@ -55,9 +56,10 @@ function Navbar() {
                 </>
               }
             >
-              <Link to='/' className="dropdown-item">Digital Drawing</Link>
-              <Link to='/' className="dropdown-item">Digital Painting</Link>
-              <Link to='/' className="dropdown-item">3D Art</Link>
+              <Link to='/artworks?category=digitalMedia' className="dropdown-item">All</Link>
+              <Link to='/artworks?category=digitalMedia&medium=digiDrawing' className="dropdown-item">Digital Drawing</Link>
+              <Link to='/artworks?category=digitalMedia&medium=digiPainting' className="dropdown-item">Digital Painting</Link>
+              <Link to='/artworks?category=digitalMedia&medium=digi3DArt' className="dropdown-item">3D Art</Link>
             </NavDropdown>
 
             <NavDropdown
@@ -70,9 +72,10 @@ function Navbar() {
                 </>
               }
             >
-              <Link to='/' className="dropdown-item">Portrait</Link>
-              <Link to='/' className="dropdown-item">Nature</Link>
-              <Link to='/' className="dropdown-item">Macro</Link>
+              <Link to='/artworks?category=photography' className="dropdown-item">All</Link>
+              <Link to='/artworks?category=photography&medium=photoPortrait' className="dropdown-item">Portrait</Link>
+              <Link to='/artworks?category=photography&medium=photoNature' className="dropdown-item">Nature</Link>
+              <Link to='/artworks?category=photography&medium=photoMacro' className="dropdown-item">Macro</Link>
             </NavDropdown>
           </Nav>
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Thumbnail from '../../components/Thumbnail';
+import ArtworkThumbnail from '../../components/ArtworkThumbnail';
 import artworkService from "../../services/artwork.service";
 
 const parseCategory = categoryQuery => {
@@ -45,7 +45,7 @@ const ArtworkGalleryPage = () => {
         }
         <div className='d-flex justify-content-center'>
       {artworks?.map(({assets, _id}) =>
-        <Thumbnail imageSrc={assets[0]} id={_id} key={_id}/>
+        <ArtworkThumbnail imageSrc={assets[0]} id={_id} key={_id}/>
       )}
       </div>
     </div>

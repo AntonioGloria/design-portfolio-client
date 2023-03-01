@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import Thumbnail from '../Thumbnail';
+import Thumbnail from '../ArtworkThumbnail';
 
 const ArtworkGallery = () => {
   const location = useLocation();

@@ -3,7 +3,6 @@ import { Tabs, Tab } from 'react-bootstrap';
 import { Route, Routes, Link } from 'react-router-dom';
 import AlbumGallery from "../AlbumGallery";
 import ArtworkGallery from "../ArtworkGallery";
-import FavoritesGallery from "../FavoritesGallery";
 import UserBioCard from "../../components/UserBioCard";
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
@@ -29,7 +28,7 @@ const UserMainTabs = (props) => {
         title={<Link to={`/${username}`} className="nav-link"><i className="fa-solid fa-images"></i>&emsp;Portfolio</Link>}
       >
         <Routes>
-            <Route path="/" element={<AlbumGallery user={username} albums={ownAlbums}/>}/>
+            <Route path="/" element={<AlbumGallery user={username} albums={ownAlbums} type={"albums"}/>}/>
             <Route path="/albums/:album" element={<ArtworkGallery/>}/>
             <Route path="*" element={<NotFoundPage/>}/>
           </Routes>
@@ -39,7 +38,7 @@ const UserMainTabs = (props) => {
         title={<Link to={`/${username}`} className="nav-link"><i className="fa-solid fa-star"></i>&emsp;Favorites</Link>}
       >
         <Routes>
-          <Route path="/" element={<FavoritesGallery user={username} albums={favCollections}/>}/>
+          <Route path="/" element={<AlbumGallery user={username} albums={favCollections} type={"favorites"}/>}/>
           <Route path="/favorites/:album" element={<ArtworkGallery/>}/>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>

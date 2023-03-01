@@ -1,7 +1,7 @@
 import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Thumbnail = (props) => {
+const ArtworkThumbnail = (props) => {
   const { imageSrc, id } = props;
   return (
     <Link to={`/artworks/${id}`}>
@@ -15,4 +15,4 @@ const Thumbnail = (props) => {
   )
 }
 
-export default Thumbnail
+export default ArtworkThumbnail

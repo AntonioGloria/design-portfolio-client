@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/auth.context';
-import { Button, Card, Form, Row, Col } from 'react-bootstrap';
+import { Button, Card, Form, Row, Col, ProgressBar } from 'react-bootstrap';
 import userService from '../../services/user.service';
 import { useNavigate } from 'react-router-dom';
 
 const CreateArtworkPage = () => {
   const navigate = useNavigate();
+
+  const [progressBar, setProgressBar] = useState(0);
+  const [uploadStart, setUploadStart] = useState(false);
 
   const { user } = useContext(AuthContext);
   const [userAlbums, setUserAlbums] = useState([]);
@@ -86,12 +89,19 @@ const CreateArtworkPage = () => {
     try {
       const uploadData = new FormData();
       const fileList = e.target.files;
+      setUploadStart(true);
 
       for (const file of fileList) {
         uploadData.append("imageUrl", file);
       };
 
-      const res = await userService.uploadImageMulti(uploadData);
+      const res = await userService.uploadImageMulti(uploadData,
+        {
+          onUploadProgress: e => {
+            setProgressBar(Math.round(e.loaded/e.total*100, 0));
+          }
+        }
+      );
       setAssets(res.data.fileUrls);
     }
     catch (err) {
@@ -147,6 +157,24 @@ const CreateArtworkPage = () => {
                   </Card.Header>
                   <Card.Body>
                     <Form.Control type="file" multiple onChange={handleAssetUploads}/>
+                    { uploadStart &&
+                      <div className="mt-3">
+                        <p className="mb-1 text-center">
+                          {progressBar < 100
+                            ? "Upload in progress..."
+                            : "Upload Completed!"}
+                        </p>
+                        <ProgressBar
+                          now={progressBar}
+                          label={`${progressBar}%`}
+                          style={{
+                            height: "2em",
+                            fontWeight: "bold",
+                            textShadow: "0 0 3px black",
+                          }}
+                        />
+                      </div>
+                    }
                   </Card.Body>
                 </Form.Group>
               </Card>

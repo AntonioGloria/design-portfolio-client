@@ -45,8 +45,8 @@ class UserService {
   };
 
   // POST upload many images
-  uploadImageMulti = (files) => {
-    return this.api.post("/users/upload-multi", files)
+  uploadImageMulti = (files, config) => {
+    return this.api.post("/users/upload-multi", files, config)
   };
 
   // POST create artwork

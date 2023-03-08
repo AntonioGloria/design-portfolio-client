@@ -38,6 +38,11 @@ class ArtworkService {
   getOne = async (id) => {
     return this.api.get(`/artworks/${id}`);
   }
+
+  // DELETE artwork by id
+  deleteOne = async (id) => {
+    return this.api.delete(`/artworks/${id}/delete`);
+  }
 }
 
 // Create one instance of the service

@@ -59,7 +59,7 @@ const ArtworkDetailsPage = () => {
                 setShowModal={setShowModal}
                 id={_id}
                 type={"project"}
-                title={artData.title}
+                data={artData}
               />
             </>
             }

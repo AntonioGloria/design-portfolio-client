@@ -20,13 +20,13 @@ class FilesService {
   }
 
   // POST upload image
-  uploadImage = (file) => {
-    return this.api.post("/api/upload", file)
+  uploadImage = (file, config) => {
+    return this.api.post("/api/upload", file, config);
   };
 
   // POST upload many images
   uploadImageMulti = (files, config) => {
-    return this.api.post("/api/upload-multi", files, config)
+    return this.api.post("/api/upload-multi", files, config);
   };
 }
 

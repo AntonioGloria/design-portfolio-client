@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Card, Row, Col } from "react-bootstrap";
+import { Button, Form, Card, Row, Col, ProgressBar } from "react-bootstrap";
 import { AuthContext } from "../../context/auth.context";
 import userService from "../../services/user.service";
 import filesService from "../../services/files.service";
@@ -9,6 +9,10 @@ const EditProfilePage = () => {
   const { isLoggedIn, logOutUser, user, setUser } = useContext(AuthContext);
   const { username, avatar, coverImg, bio, tagline } = user;
 
+  const [avatarBar, setAvatarBar] = useState(0);
+  const [coverImgBar, setCoverImgBar] = useState(0);
+  const [avatarStart, setAvatarStart] = useState(false);
+  const [coverImgStart, setCoverImgStart] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(avatar);
   const [coverUrl, setCoverUrl] = useState(coverImg);
   const [newTagline, setNewTagline] = useState(tagline);
@@ -20,7 +24,13 @@ const EditProfilePage = () => {
     try {
       const uploadData = new FormData();
       uploadData.append("imageUrl", e.target.files[0]);
-      const res = await filesService.uploadImage(uploadData);
+      setAvatarStart(true);
+
+      const res = await filesService.uploadImage(uploadData, {
+        onUploadProgress: e => {
+          setAvatarBar(Math.round(e.loaded/e.total*100, 0));
+        }
+      });
       setAvatarUrl(res.data.fileUrl);
     }
     catch (err) {
@@ -32,7 +42,13 @@ const EditProfilePage = () => {
     try {
       const uploadData = new FormData();
       uploadData.append("imageUrl", e.target.files[0]);
-      const res = await filesService.uploadImage(uploadData);
+      setCoverImgStart(true);
+
+      const res = await filesService.uploadImage(uploadData, {
+        onUploadProgress: e => {
+          setCoverImgBar(Math.round(e.loaded/e.total*100, 0));
+        }
+      });
       setCoverUrl(res.data.fileUrl);
     }
     catch (err) {
@@ -107,6 +123,7 @@ const EditProfilePage = () => {
                     <Card.Img src={avatarUrl} alt="avatar-img" style={{width:"100px"}} className="m-auto mt-3"/>
                     <Card.Body>
                       <Form.Control type="file" onChange={handleAvatarUpload}/>
+                      {avatarStart && <ProgressBar now={avatarBar} style={{height: "0.5em"}}/>}
                     </Card.Body>
                   </Form.Group>
                 </Card>
@@ -122,11 +139,12 @@ const EditProfilePage = () => {
                   <Card.Img
                     src={coverUrl}
                     alt="cover-img"
-                    style={{width:"480px", height:"90px", objectFit:"fill"}}
+                    style={{width:"480px", height:"90px", objectFit:"cover"}}
                     className="m-auto"
                   />
                   <Card.Body>
                     <Form.Control type="file" onChange={handleCoverUpload}/>
+                    {coverImgStart && <ProgressBar now={coverImgBar} style={{height: "0.5em"}}/>}
                   </Card.Body>
                 </Form.Group>
               </Card>

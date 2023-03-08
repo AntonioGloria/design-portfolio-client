@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 import { Button, Card, Form, Row, Col, ProgressBar } from 'react-bootstrap';
 import userService from '../../services/user.service';
+import filesService from '../../services/files.service';
 import artworkService from '../../services/artwork.service';
 
 const CreateArtworkPage = () => {
@@ -96,7 +97,7 @@ const CreateArtworkPage = () => {
         uploadData.append("imageUrl", file);
       };
 
-      const res = await userService.uploadImageMulti(uploadData,
+      const res = await filesService.uploadImageMulti(uploadData,
         {
           onUploadProgress: e => {
             setProgressBar(Math.round(e.loaded/e.total*100, 0));

@@ -1,8 +1,9 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Form, Card, Row, Col } from "react-bootstrap";
 import { AuthContext } from "../../context/auth.context";
 import userService from "../../services/user.service";
-import { Button, Form, Card, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import filesService from "../../services/files.service";
 
 const EditProfilePage = () => {
   const { isLoggedIn, logOutUser, user, setUser } = useContext(AuthContext);
@@ -19,7 +20,7 @@ const EditProfilePage = () => {
     try {
       const uploadData = new FormData();
       uploadData.append("imageUrl", e.target.files[0]);
-      const res = await userService.uploadImage(uploadData);
+      const res = await filesService.uploadImage(uploadData);
       setAvatarUrl(res.data.fileUrl);
     }
     catch (err) {
@@ -31,7 +32,7 @@ const EditProfilePage = () => {
     try {
       const uploadData = new FormData();
       uploadData.append("imageUrl", e.target.files[0]);
-      const res = await userService.uploadImage(uploadData);
+      const res = await filesService.uploadImage(uploadData);
       setCoverUrl(res.data.fileUrl);
     }
     catch (err) {

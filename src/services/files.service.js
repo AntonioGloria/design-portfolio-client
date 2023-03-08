@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-class UserService {
+class FilesService {
   constructor() {
     this.api = axios.create({
       baseURL: process.env.REACT_APP_SERVER_URL || "http://localhost:5005"
@@ -19,28 +19,18 @@ class UserService {
     });
   }
 
-  // GET /users
-  getAll = async () => {
-    return this.api.get('/users');
-  }
+  // POST upload image
+  uploadImage = (file) => {
+    return this.api.post("/api/upload", file)
+  };
 
-  // GET /:username
-  getOne = async (username) => {
-    return this.api.get(`/users/${username}`);
-  }
-
-  // GET /:username/albums
-  getUserAlbums = async (username) => {
-    return this.api.get(`/users/${username}/albums`);
-  }
-
-  // PUT update /:username
-  updateOne = async (username, requestBody) => {
-    return this.api.put(`/users/${username}/edit-profile`, requestBody);
-  }
+  // POST upload many images
+  uploadImageMulti = (files, config) => {
+    return this.api.post("/api/upload-multi", files, config)
+  };
 }
 
 // Create one instance of the service
-const userService = new UserService();
+const filesService = new FilesService();
 
-export default userService;
+export default filesService;

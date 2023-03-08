@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 import { Button, Card, Form, Row, Col, ProgressBar } from 'react-bootstrap';
 import userService from '../../services/user.service';
-import { useNavigate } from 'react-router-dom';
+import artworkService from '../../services/artwork.service';
 
 const CreateArtworkPage = () => {
   const navigate = useNavigate();
@@ -112,7 +113,7 @@ const CreateArtworkPage = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const newArtwork = await userService.createArtwork(user.username, {
+      const newArtwork = await artworkService.create({
         title,
         author: user._id,
         description,
@@ -122,8 +123,8 @@ const CreateArtworkPage = () => {
         assets
       });
       navigate(`/artworks/${newArtwork.data._id}`);
-
     }
+
     catch (err) {
       console.log(err);
     }

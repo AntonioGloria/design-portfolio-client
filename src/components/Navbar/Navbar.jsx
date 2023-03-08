@@ -105,7 +105,7 @@ function Navbar() {
                 </>
               }>
                 <Link
-                  to={`/${user.username}/create-artwork`}
+                  to={`/artworks/create`}
                   className="dropdown-item">
                   <sup><i className="fa-solid fa-plus"></i></sup>
                   <sub><i className="fa-solid fa-image"></i></sub>

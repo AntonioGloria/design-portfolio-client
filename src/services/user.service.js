@@ -48,12 +48,6 @@ class UserService {
   uploadImageMulti = (files, config) => {
     return this.api.post("/users/upload-multi", files, config)
   };
-
-  // POST create artwork
-  createArtwork = (username, requestBody) => {
-    return this.api.post(`/users/${username}/create-artwork`, requestBody);
-  }
-
 }
 
 // Create one instance of the service

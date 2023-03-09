@@ -1,6 +1,7 @@
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import artworkService from "../../services/artwork.service";
+import filesService from "../../services/files.service";
 
 const DeleteModal = (props) => {
   const {showModal, setShowModal, type, data } = props;
@@ -13,10 +14,15 @@ const DeleteModal = (props) => {
     try {
       if (type==='project') {
         const { username } = data.author;
+        const { assets } = data;
+
+        await filesService.deleteImageMulti(assets);
         await artworkService.deleteOne(id);
+
         navigate(`/${username}`);
       }
     }
+
     catch (err) {
       console.log(err)
     }

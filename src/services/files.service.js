@@ -28,6 +28,11 @@ class FilesService {
   uploadImageMulti = (files, config) => {
     return this.api.post("/api/upload-multi", files, config);
   };
+
+  // DELETE images from project
+  deleteImageMulti = (imgUrls) => {
+    return this.api.put("/api/delete-multi/", imgUrls);
+  };
 }
 
 // Create one instance of the service

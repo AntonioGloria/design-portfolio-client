@@ -19,14 +19,19 @@ class AlbumService {
     });
   }
 
-  // GET /albums
+  // GET all albums
   getAll = async () => {
     return this.api.get('/albums');
   }
 
-  // GET /:id
+  // GET album by :id
   getOne = async (id) => {
     return this.api.get(`/albums/${id}`);
+  }
+
+  // Create album
+  create = async (requestBody) => {
+    return this.api.post(`/albums/create`, requestBody);
   }
 }
 

@@ -13,14 +13,14 @@ const CreateArtworkPage = () => {
   const [uploadStart, setUploadStart] = useState(false);
 
   const { user } = useContext(AuthContext);
-  const [userAlbums, setUserAlbums] = useState([]);
+  const [userAlbums, setUserAlbums] = useState(null);
   const [mediumOptions, setMediumOptions] = useState([]);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [medium, setMedium] = useState("");
-  const [albums, setAlbums] = useState([]);
+  const [selectedAlbums, setSelectedAlbums] = useState(null);
   const [assets, setAssets] = useState([]);
 
   const physOptions = [
@@ -65,6 +65,7 @@ const CreateArtworkPage = () => {
         const [resUser] = res.data;
         const { ownAlbums } = resUser;
         setUserAlbums(ownAlbums);
+        setSelectedAlbums([ownAlbums[0]._id]);
       }
       catch (err) {
         console.log(err);
@@ -84,7 +85,8 @@ const CreateArtworkPage = () => {
       return selected.value;
     });
 
-    setAlbums(selectedValues);
+    selectedValues.unshift(userAlbums[0]._id);
+    setSelectedAlbums(selectedValues);
   }
 
   const handleAssetUploads = async (e) => {
@@ -120,7 +122,7 @@ const CreateArtworkPage = () => {
         description,
         category,
         medium,
-        albums,
+        albums: selectedAlbums,
         assets
       });
       navigate(`/artworks/${newArtwork.data._id}`);
@@ -132,6 +134,7 @@ const CreateArtworkPage = () => {
   }
 
   return (
+    <> {userAlbums &&
     <Card className="w-75 m-auto mt-5 shadow">
       <Card.Header className="text-center">
         <h4>New Artwork</h4>
@@ -238,9 +241,17 @@ const CreateArtworkPage = () => {
                   <Form.Label>Album</Form.Label>
                 </Card.Header>
                 <Card.Body>
-                  <Form.Select multiple={true} onChange={(e) => handleSelectAlbums(e)}>
-                    { userAlbums.map(album =>
-                        <option key={album._id} value={album._id}>{album.title}</option>
+                  <Form.Select
+                    defaultValue={[userAlbums[0]._id]}
+                    onChange={(e) => handleSelectAlbums(e)}
+                    style={{overflow:'auto'}}
+                    multiple={true}
+                  >
+                    {userAlbums.map((album, i) =>
+                      i !== 0 &&
+                        <option key={album._id} value={album._id}>
+                          {album.title}
+                        </option>
                     )}
                   </Form.Select>
                 </Card.Body>
@@ -255,6 +266,7 @@ const CreateArtworkPage = () => {
         </Form>
       </Card.Body>
     </Card>
+    } </>
   );
 }
 

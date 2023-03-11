@@ -1,5 +1,5 @@
 .header-main {
-    background-position: bottom center;
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
@@ -7,10 +7,18 @@
 }
 
 .name-tag {
+    background-image: linear-gradient(rgba(33, 37, 41, 0.9), rgba(33, 37, 41, 0.5) 75%, transparent);
+    border-radius: 0.5em;
     float: left;
     position: relative;
+    padding: 0 1em 0 0;
     top: 60%;
     left: 2%;
+}
+
+.name-tag-text {
+    height: 100%;
+    vertical-align: middle;
 }
 
 .avatar {

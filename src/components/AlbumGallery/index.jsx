@@ -1,25 +1,39 @@
-import { useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/auth.context';
 import AlbumCard from '../AlbumCard';
 import CreateAlbumForm from '../AlbumGalleryComps/CreateAlbumForm';
 
 const AlbumGallery = (props) => {
-  const { user, albums, type } = props;
+  const { user, type } = props;
   const { isLoggedIn, user: loggedUser } = useContext(AuthContext);
+  const [albums, setAlbums] = useState(null);
+
+  useEffect(() => {
+    setAlbums(props.albums);
+  }, [props]);
 
   return (
     <>
-      {isLoggedIn && user===loggedUser.username &&
-        <CreateAlbumForm owner={loggedUser}/>
-      }
-      <div className='d-flex justify-content-center'>
-        {albums?.map(album =>
-          <AlbumCard
-            album={album}
-            path={`/${user}/${type}/${album._id}`}
-            key={album._id}/>
-        )}
-      </div>
+      {albums &&
+        <>{isLoggedIn && user===loggedUser.username &&
+            <CreateAlbumForm
+              owner={loggedUser}
+              albums={albums}
+              setAlbums={setAlbums}
+              type={type}
+            />
+          }
+
+          <div className='d-flex justify-content-center flex-wrap'>
+            {albums.map(album =>
+              <AlbumCard
+                key={album._id}
+                album={album}
+                path={`/${user}/${type}/${album._id}`}
+              />
+            )}
+          </div>
+        </>}
     </>
   );
 }

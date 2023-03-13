@@ -1,18 +1,24 @@
-import { useState } from 'react';
-import { Button, Form, InputGroup } from 'react-bootstrap';
-import albumService from '../../../services/album.service';
+import { useState } from "react";
+import { Button, Form, InputGroup } from "react-bootstrap";
+import albumService from "../../../services/album.service";
 
 const CreateAlbumForm = (props) => {
-  const { owner } = props;
-  const [title, setTitle] = useState('');
+  const { owner, albums, setAlbums, type } = props;
+  const [title, setTitle] = useState("");
+
+  const typeTxt = type[0].toUpperCase() + type.slice(1, -1);
 
   const handleSubmit = async (e) => {
     try {
-      e.preventDefault()
-      await albumService.create({
+      e.preventDefault();
+
+      const newAlbum = await albumService.create({
         title,
         owner
       });
+
+      setAlbums([...albums, newAlbum.data]);
+      setTitle("");
     }
     catch (err) {
       console.log(err);
@@ -24,7 +30,7 @@ const CreateAlbumForm = (props) => {
       <InputGroup>
         <Form.Control
           type="text"
-          placeholder="New Album Title"
+          placeholder={`New ${typeTxt} Title`}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />

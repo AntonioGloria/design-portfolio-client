@@ -1,5 +1,5 @@
 import { Button, Modal } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import artworkService from "../../services/artwork.service";
 import filesService from "../../services/files.service";
 
@@ -12,7 +12,7 @@ const DeleteModal = (props) => {
 
   const handleDelete = async (type, id) => {
     try {
-      if (type==='project') {
+      if (type==="project") {
         const { username } = data.author;
         const { assets } = data;
 
@@ -32,12 +32,12 @@ const DeleteModal = (props) => {
     <Modal
       show={showModal}
       onHide={closeModal}
-      backdrop='static'
+      backdrop="static"
       keyboard={false}
-      contentClassName='bg-body'
+      contentClassName="bg-body"
       centered
     >
-      <Modal.Header closeButton closeVariant='white' className='border-bottom-0 bg-danger'>
+      <Modal.Header closeButton closeVariant="white" className="border-bottom-0 bg-danger">
         <Modal.Title>
           <i className="fa-solid fa-triangle-exclamation"/>
           &nbsp;DELETE {`${type.toUpperCase()}`}&nbsp;
@@ -46,9 +46,9 @@ const DeleteModal = (props) => {
       <Modal.Body>
         Are you sure you want to delete the {type} {title}?
       </Modal.Body>
-      <Modal.Footer className='border-top-0'>
-        <Button variant='danger' onClick={() => handleDelete(type, _id)}>Delete</Button>
-        <Button variant='secondary' onClick={closeModal}>Cancel</Button>
+      <Modal.Footer className="border-top-0">
+        <Button variant="secondary" onClick={closeModal}>Cancel</Button>
+        <Button variant="danger" onClick={() => handleDelete(type, _id)}>Delete</Button>
       </Modal.Footer>
     </Modal>
   )

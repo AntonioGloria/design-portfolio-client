@@ -1,16 +1,16 @@
 import { Button, DropdownButton } from "react-bootstrap";
 
 const AlbumCardControls = (props) => {
-  const { id } = props;
+  const { album, setManageAlbum, setShowModal } = props;
 
   const handleEdit = (e) => {
     e.preventDefault();
-    console.log("edit", id);
+    console.log("edit", album._id);
   }
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    console.log("delete", id);
+  const handleDelete = () => {
+    setShowModal(true);
+    setManageAlbum(album);
   }
 
   return (

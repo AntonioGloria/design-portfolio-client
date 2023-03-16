@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 class AlbumService {
   constructor() {
@@ -21,7 +21,7 @@ class AlbumService {
 
   // GET all albums
   getAll = async () => {
-    return this.api.get('/albums');
+    return this.api.get("/albums");
   }
 
   // GET album by :id
@@ -31,7 +31,12 @@ class AlbumService {
 
   // Create album
   create = async (requestBody) => {
-    return this.api.post(`/albums/create`, requestBody);
+    return this.api.post("/albums/create", requestBody);
+  }
+
+  // Delete album
+  deleteAlbum = async (id) => {
+    return this.api.delete(`/albums/${id}/delete`);
   }
 }
 

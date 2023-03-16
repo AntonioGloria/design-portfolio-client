@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
-import AlbumCardControls from "../AlbumGalleryComps/AlbumCardControls";
+import AlbumCardControls from "../AlbumCardControls";
 
 const AlbumCard = (props) => {
   const { album, path } = props;

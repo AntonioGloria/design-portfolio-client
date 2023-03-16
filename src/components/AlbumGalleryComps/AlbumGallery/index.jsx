@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { AuthContext } from '../../context/auth.context';
+import { AuthContext } from '../../../context/auth.context';
 import AlbumCard from '../AlbumCard';
-import CreateAlbumForm from '../AlbumGalleryComps/CreateAlbumForm';
+import CreateAlbumForm from '../CreateAlbumForm';
 
 const AlbumGallery = (props) => {
   const { user, type } = props;

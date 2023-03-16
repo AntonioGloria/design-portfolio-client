@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Route, Routes, Link } from 'react-router-dom';
-import AlbumGallery from "../AlbumGallery";
+import AlbumGallery from "../AlbumGalleryComps/AlbumGallery";
 import ArtworkGallery from "../ArtworkGallery";
 import UserBioCard from "../../components/UserBioCard";
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';

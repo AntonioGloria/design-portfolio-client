@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import { AuthContext } from '../../context/auth.context';
 import AlbumCard from '../AlbumCard';
 import CreateAlbumForm from '../AlbumGalleryComps/CreateAlbumForm';
@@ -24,15 +25,18 @@ const AlbumGallery = (props) => {
             />
           }
 
-          <div className='d-flex justify-content-center flex-wrap'>
-            {albums.map(album =>
-              <AlbumCard
-                key={album._id}
-                album={album}
-                path={`/${user}/${type}/${album._id}`}
-              />
-            )}
-          </div>
+          <Container className="mt-4" fluid="lg">
+            <Row className="gy-4">
+              {albums.map(album =>
+                <Col key={album._id} className="gx-1">
+                  <AlbumCard
+                    album={album}
+                    path={`/${user}/${type}/${album._id}`}
+                  />
+                </Col>
+              )}
+            </Row>
+          </Container>
         </>}
     </>
   );

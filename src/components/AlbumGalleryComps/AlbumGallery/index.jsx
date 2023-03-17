@@ -22,7 +22,7 @@ const AlbumGallery = (props) => {
       {albums &&
         <>{isLoggedIn && user===loggedUser.username &&
             <CreateAlbumForm
-              owner={loggedUser}
+              creator={loggedUser}
               albums={albums}
               setAlbums={setAlbums}
               type={type}

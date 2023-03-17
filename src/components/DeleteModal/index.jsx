@@ -12,7 +12,7 @@ const DeleteModal = (props) => {
   const handleDelete = async (type, id) => {
     try {
       if (type === "project") {
-        const { username } = data.author;
+        const { username } = data.creator;
         const { assets } = data;
 
         await filesService.deleteImageMulti(assets);

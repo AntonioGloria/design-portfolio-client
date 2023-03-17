@@ -118,7 +118,7 @@ const CreateArtworkPage = () => {
       e.preventDefault();
       const newArtwork = await artworkService.create({
         title,
-        author: user._id,
+        creator: user._id,
         description,
         category,
         medium,

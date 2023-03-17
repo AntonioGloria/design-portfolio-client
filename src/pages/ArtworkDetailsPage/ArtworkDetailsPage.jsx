@@ -40,7 +40,7 @@ const ArtworkDetailsPage = () => {
           </Col>
           <Col className="bg-dark">
             <ArtworkSidePanel artData={artData}/>
-            {isLoggedIn && artData?.author?.username===user.username &&
+            {isLoggedIn && artData?.creator?.username===user.username &&
             <>
               <hr/>
               <h5 className='text-center mb-3'>Manage Project</h5>

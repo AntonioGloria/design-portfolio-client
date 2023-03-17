@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 
 const AlbumCard = (props) => {
   const { album, path, children } = props;
-  const { title } = album;
+  const { title, thumbnail } = album;
 
   return (
     <Card className="shadow text-center" style={{width:"200px"}}>
@@ -14,7 +14,7 @@ const AlbumCard = (props) => {
         className="text-decoration-none"
       >
         <Card.Img
-          src="https://res.cloudinary.com/dwhznw5ny/image/upload/v1671209665/design-portfolio/ui-defaults/defaultAlbum_qgieye.png"
+          src={thumbnail}
         />
         <Card.Footer>
           {title}

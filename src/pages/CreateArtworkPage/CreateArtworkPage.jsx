@@ -1,16 +1,18 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
-import { Button, Card, Form, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Button, Card, Form, Row, Col } from 'react-bootstrap';
 import userService from '../../services/user.service';
-import filesService from '../../services/files.service';
 import artworkService from '../../services/artwork.service';
+import InputTitle from '../../components/ArtworkFormComps/InputTitle';
+import InputImages from '../../components/ArtworkFormComps/InputImages';
+import InputDescription from '../../components/ArtworkFormComps/InputDescription';
+import InputCategory from '../../components/ArtworkFormComps/InputCategory';
+import InputMedium from '../../components/ArtworkFormComps/InputMedium';
+import InputAlbum from '../../components/ArtworkFormComps/InputAlbum';
 
 const CreateArtworkPage = () => {
   const navigate = useNavigate();
-
-  const [progressBar, setProgressBar] = useState(0);
-  const [uploadStart, setUploadStart] = useState(false);
 
   const { user } = useContext(AuthContext);
   const [userAlbums, setUserAlbums] = useState(null);
@@ -41,7 +43,7 @@ const CreateArtworkPage = () => {
     {value: "photoMacro", text: "Macro"}
   ];
 
-  const handleCategory = (e) => {
+  const handleMedium = (e) => {
     let choice = e.target.value;
     setCategory(choice);
 
@@ -74,45 +76,6 @@ const CreateArtworkPage = () => {
     getAlbums();
   },[user]);
 
-  const handleSelectAlbums = (e) => {
-    const allOptions = [...e.target.children];
-
-    const selected = allOptions.filter(option => {
-      return option.selected;
-    });
-
-    const selectedValues = selected.map(selected => {
-      return selected.value;
-    });
-
-    selectedValues.unshift(userAlbums[0]._id);
-    setSelectedAlbums(selectedValues);
-  }
-
-  const handleAssetUploads = async (e) => {
-    try {
-      const uploadData = new FormData();
-      const fileList = e.target.files;
-      setUploadStart(true);
-
-      for (const file of fileList) {
-        uploadData.append("imageUrl", file);
-      };
-
-      const res = await filesService.uploadImageMulti(uploadData,
-        {
-          onUploadProgress: e => {
-            setProgressBar(Math.round(e.loaded/e.total*100, 0));
-          }
-        }
-      );
-      setAssets(res.data.fileUrls);
-    }
-    catch (err) {
-      console.log(err);
-    }
-  }
-
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -144,120 +107,15 @@ const CreateArtworkPage = () => {
         <Form onSubmit={handleSubmit} encType="multipart/form-data">
           <Row>
             <Col>
-              <Card className="m-3">
-                <Form.Group controlId="title-text">
-                  <Card.Header>
-                    <Form.Label>Artwork Title</Form.Label>
-                  </Card.Header>
-                  <Card.Body>
-                    <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
-                  </Card.Body>
-                </Form.Group>
-              </Card>
-
-              <Card className="m-3">
-                <Form.Group controlId="assets-file">
-                  <Card.Header>
-                    <Form.Label>{"Upload Artwork Image(s)"}</Form.Label>
-                  </Card.Header>
-                  <Card.Body>
-                    <Form.Control type="file" multiple onChange={handleAssetUploads}/>
-                    { uploadStart &&
-                      <div className="mt-3">
-                        <p className="mb-1 text-center">
-                          {progressBar < 100
-                            ? "Upload in progress..."
-                            : "Upload Completed!"}
-                        </p>
-                        <ProgressBar
-                          now={progressBar}
-                          label={`${progressBar}%`}
-                          style={{
-                            height: "2em",
-                            fontWeight: "bold",
-                            textShadow: "0 0 3px black",
-                          }}
-                        />
-                      </div>
-                    }
-                  </Card.Body>
-                </Form.Group>
-              </Card>
-
-              <Card className="m-3">
-                <Form.Group controlId="description-textarea">
-                  <Card.Header>
-                    <Form.Label>Artwork Description</Form.Label>
-                  </Card.Header>
-                  <Card.Body>
-                    <Form.Control
-                      as="textarea"
-                      rows={4}
-                      style={{resize:"none"}}
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </Card.Body>
-                </Form.Group>
-              </Card>
+              <InputTitle title={title} setTitle={setTitle}/>
+              <InputImages setAssets={setAssets}/>
+              <InputDescription description={description} setDescription={setDescription}/>
             </Col>
 
             <Col>
-              <Card className="m-3">
-                <Form.Group controlId="category-select">
-                  <Card.Header>
-                    <Form.Label>Category</Form.Label>
-                  </Card.Header>
-                  <Card.Body>
-                    <Form.Select value={category} onChange={(e) => handleCategory(e)}>
-                      <option>Choose Category...</option>
-                      <option value="physicalMedia">Physical Media</option>
-                      <option value="digitalMedia">Digital Media</option>
-                      <option value="photography">Photography</option>
-                    </Form.Select>
-                  </Card.Body>
-                </Form.Group>
-              </Card>
-
-              <Card className="m-3">
-                <Form.Group controlId="medium-select">
-                  <Card.Header>
-                    <Form.Label>Medium</Form.Label>
-                  </Card.Header>
-                  <Card.Body>
-                    <Form.Select value={medium} onChange={(e) => setMedium(e.target.value)}>
-                      <option>Choose Medium...</option>
-                      { mediumOptions.map(option =>
-                          <option key={option.value} value={option.value}>{option.text}</option>
-                      )}
-                    </Form.Select>
-                  </Card.Body>
-                </Form.Group>
-              </Card>
-
-            <Card className="m-3">
-              <Form.Group controlId="album-select">
-                <Card.Header>
-                  <Form.Label>Album</Form.Label>
-                </Card.Header>
-                <Card.Body>
-                  <Form.Select
-                    defaultValue={[userAlbums[0]._id]}
-                    onChange={(e) => handleSelectAlbums(e)}
-                    style={{overflow:'auto'}}
-                    multiple={true}
-                  >
-                    {userAlbums.map((album, i) =>
-                      i !== 0 &&
-                        <option key={album._id} value={album._id}>
-                          {album.title}
-                        </option>
-                    )}
-                  </Form.Select>
-                </Card.Body>
-              </Form.Group>
-            </Card>
-
+              <InputCategory category={category} handleMedium={handleMedium}/>
+              <InputMedium medium={medium} setMedium={setMedium} mediumOptions={mediumOptions} category={category}/>
+              <InputAlbum setSelectedAlbums={setSelectedAlbums} userAlbums={userAlbums}/>
             </Col>
           </Row>
           <Form.Group className="text-center">

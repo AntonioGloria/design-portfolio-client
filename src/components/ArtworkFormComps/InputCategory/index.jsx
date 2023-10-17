@@ -1,7 +1,7 @@
 import { Card, Form } from "react-bootstrap";
 
 const InputCategory = (props) => {
-  const { category, setCategory, setMediumOptions } = props.share;
+  const { category, setCategory, setMediumOptions } = props;
 
   const physOptions = [
     {value: "physDrawing", text : "Drawing"},

@@ -11,7 +11,7 @@ const InputMedium = (props) => {
         </Card.Header>
         <Card.Body>
           <Form.Select value={medium} onChange={(e) => setMedium(e.target.value)}>
-            <option>Choose Medium...</option>
+            <option value="">Choose Medium...</option>
             { mediumOptions.map(option =>
                 <option key={option.value} value={option.value}>{option.text}</option>
             )}

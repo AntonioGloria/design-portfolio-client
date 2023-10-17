@@ -25,41 +25,6 @@ const CreateArtworkPage = () => {
   const [selectedAlbums, setSelectedAlbums] = useState(null);
   const [assets, setAssets] = useState([]);
 
-  const physOptions = [
-    {value: "physDrawing", text : "Drawing"},
-    {value: "physPainting", text: "Painting"},
-    {value:"physSculpture", text: "Sculpture"}
-  ];
-
-  const digiOptions = [
-    {value: "digiDrawing", text: "Digital Drawing"},
-    {value: "digiPainting", text: "Digital Painting"},
-    {value: "digi3DArt", text: "3D Art"}
-  ];
-
-  const photoOptions = [
-    {value: "photoPortrait", text: "Portrait"},
-    {value: "photoNature", text: "Nature"},
-    {value: "photoMacro", text: "Macro"}
-  ];
-
-  const handleMedium = (e) => {
-    let choice = e.target.value;
-    setCategory(choice);
-
-    if (choice === "physicalMedia") {
-      setMediumOptions(physOptions);
-    }
-
-    if (choice === "digitalMedia") {
-      setMediumOptions(digiOptions);
-    }
-
-    if (choice === "photography") {
-      setMediumOptions(photoOptions);
-    }
-  }
-
   useEffect(() => {
     const getAlbums = async () => {
       try {
@@ -111,10 +76,9 @@ const CreateArtworkPage = () => {
               <InputImages setAssets={setAssets}/>
               <InputDescription description={description} setDescription={setDescription}/>
             </Col>
-
             <Col>
-              <InputCategory category={category} handleMedium={handleMedium}/>
-              <InputMedium medium={medium} setMedium={setMedium} mediumOptions={mediumOptions} category={category}/>
+              <InputCategory category={category} setCategory={setCategory} setMediumOptions={setMediumOptions}/>
+              <InputMedium medium={medium} setMedium={setMedium} mediumOptions={mediumOptions}/>
               <InputAlbum setSelectedAlbums={setSelectedAlbums} userAlbums={userAlbums}/>
             </Col>
           </Row>

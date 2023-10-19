@@ -1,7 +1,7 @@
 import { Card, Form } from "react-bootstrap";
 
 const InputAlbum = (props) => {
-  const { setSelectedAlbums, userAlbums } = props;
+  const { selectedAlbums, setSelectedAlbums, userAlbums } = props;
 
   const handleSelectAlbums = (e) => {
     const allOptions = [...e.target.children];
@@ -26,7 +26,7 @@ const InputAlbum = (props) => {
         </Card.Header>
         <Card.Body>
           <Form.Select
-            defaultValue={[userAlbums[0]._id]}
+            defaultValue={selectedAlbums}
             onChange={(e) => handleSelectAlbums(e)}
             style={{overflow:'auto'}}
             multiple={true}

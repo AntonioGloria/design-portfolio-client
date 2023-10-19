@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../context/auth.context';
 import { Row, Col, Container, Button } from 'react-bootstrap';
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import artworkService from '../../services/artwork.service';
 import ArtworkDisplay from '../../components/ArtworkDetailsComps/ArtworkDisplay';
 import ArtworkSidePanel from '../../components/ArtworkDetailsComps/ArtworkSidePanel';
@@ -45,10 +45,12 @@ const ArtworkDetailsPage = () => {
               <hr/>
               <h5 className='text-center mb-3'>Manage Project</h5>
               <div className='d-flex justify-content-around'>
-                <Button variant='warning'>
-                  <i className="fa-solid fa-pen-to-square"/>
-                  &nbsp;Edit Project
-                </Button>
+                <Link to={`/artworks/${_id}/edit`}>
+                  <Button variant='warning'>
+                    <i className="fa-solid fa-pen-to-square"/>
+                    &nbsp;Edit Project
+                  </Button>
+                </Link>
                 <Button variant='danger' onClick={openModal}>
                   <i className="fa-solid fa-trash-can"/>
                   &nbsp;Delete Project

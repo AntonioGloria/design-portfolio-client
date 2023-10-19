@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import ArtworkThumbnail from '../../components/ArtworkThumbnail';
 import artworkService from "../../services/artwork.service";
 
@@ -45,7 +45,9 @@ const ArtworkGalleryPage = () => {
         }
         <div className='d-flex justify-content-center'>
       {artworks?.map(({assets, _id}) =>
-        <ArtworkThumbnail imageSrc={assets[0]} id={_id} key={_id}/>
+        <Link key={_id} to={`/artworks/${_id}`}>
+          <ArtworkThumbnail imageSrc={assets[0]}/>
+        </Link>
       )}
       </div>
     </div>

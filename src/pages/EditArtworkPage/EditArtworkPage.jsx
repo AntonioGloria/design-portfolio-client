@@ -52,16 +52,18 @@ const EditArtworkPage = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const newArtwork = await artworkService.create({
+      const editData = {
         title,
-        creator: user._id,
         description,
         category,
         medium,
         albums: selectedAlbums,
         assets
-      });
-      navigate(`/artworks/${newArtwork.data._id}`);
+      }
+
+      const response = await artworkService.editArtwork(_id, editData);
+      console.log(response)
+      navigate(`/artworks/${_id}`);
     }
 
     catch (err) {
@@ -81,7 +83,7 @@ const EditArtworkPage = () => {
           <Row>
             <Col>
               <InputTitle title={title} setTitle={setTitle}/>
-              <InputImages setAssets={setAssets}/>
+              <InputImages assets={assets} setAssets={setAssets}/>
               <InputDescription description={description} setDescription={setDescription}/>
             </Col>
             <Col>

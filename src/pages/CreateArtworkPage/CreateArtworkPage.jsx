@@ -73,7 +73,7 @@ const CreateArtworkPage = () => {
           <Row>
             <Col>
               <InputTitle title={title} setTitle={setTitle}/>
-              <InputImages setAssets={setAssets}/>
+              <InputImages assets={assets} setAssets={setAssets}/>
               <InputDescription description={description} setDescription={setDescription}/>
             </Col>
             <Col>

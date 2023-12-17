@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Card, Form, ProgressBar } from "react-bootstrap";
+import { Card, Form, ProgressBar, Row, Col, Container } from "react-bootstrap";
 import filesService from '../../../services/files.service';
+import AssetPreview from "../../AssetPreview";
+import ArtworkThumbnail from "../../ArtworkThumbnail";
 
 const InputImages = (props) => {
-  const { setAssets } = props;
+  const { assets, setAssets } = props;
 
   const [progressBar, setProgressBar] = useState(0);
   const [uploadStart, setUploadStart] = useState(false);
@@ -25,7 +27,10 @@ const InputImages = (props) => {
           }
         }
       );
-      setAssets(res.data.fileUrls);
+
+      setAssets([...assets, ...res.data.fileUrls]);
+      setUploadStart(false);
+      setProgressBar(0);
     }
     catch (err) {
       console.log(err);
@@ -58,6 +63,27 @@ const InputImages = (props) => {
               />
             </div>
           }
+          <Container className="m-3 text-center">
+            { assets.length > 0 ?
+              <>
+                <p className="text-center">Artwork Images</p>
+                <Row>
+                  {assets.map((asset, i) => {
+                    return (
+                      <Col key={i} className="gx-1">
+                        <AssetPreview asset={asset} setAssets={setAssets}/>
+                      </Col>
+                    )
+                  })}
+                </Row>
+              </>
+              :
+              <>
+              <p className="text-center">No Images Yet</p>
+              <ArtworkThumbnail imageSrc={"https://res.cloudinary.com/dwhznw5ny/image/upload/v1702842616/design-portfolio/ui-defaults/defaultAlbum_zxv3sr.png"}/>
+              </>
+            }
+          </Container>
         </Card.Body>
       </Form.Group>
     </Card>

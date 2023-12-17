@@ -44,6 +44,10 @@ class ArtworkService {
     return this.api.post(`/artworks/create`, requestBody);
   }
 
+  editArtwork = (id, requestBody) => {
+    return this.api.patch(`/artworks/${id}/edit`, requestBody);
+  }
+
   // DELETE artwork by id
   deleteOne = async (id) => {
     return this.api.delete(`/artworks/${id}/delete`);

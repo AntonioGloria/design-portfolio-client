@@ -37,4 +37,7 @@ $form-file-button-hover-bg: shade-color($form-file-button-bg, 5%);
 
 $carousel-control-icon-width: 4rem;
 
+$thumbnail-border-color: $gray-600;
+$thumbnail-bg: $gray-700;
+
 @import "../../node_modules/bootstrap/scss/bootstrap";

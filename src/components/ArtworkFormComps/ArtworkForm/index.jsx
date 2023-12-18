@@ -70,15 +70,12 @@ const ArtworkForm = (props) => {
 
       if (type === "Create") {
         response = await artworkService.create(formData);
-        //navigate(`/artworks/${newArtwork.data._id}`);
       }
 
       else {
         response = await artworkService.editArtwork(artworkId, formData);
-        //navigate(`/artworks/${_id}`);
       }
 
-      console.log(response)
       navigate(`/artworks/${response.data._id}`);
     }
 
@@ -98,14 +95,23 @@ const ArtworkForm = (props) => {
         <Form onSubmit={handleSubmit} encType="multipart/form-data">
           <Row>
             <Col>
-              <InputTitle title={title} setTitle={setTitle}/>
-              <InputImages assets={assets} setAssets={setAssets}/>
-              <InputDescription description={description} setDescription={setDescription}/>
+              <Card className="m-3">
+              <Card.Header>Artwork Information</Card.Header>
+                <InputTitle title={title} setTitle={setTitle}/>
+                <Row>
+                  <Col>
+                    <InputCategory category={category} setCategory={setCategory} setMediumOptions={setMediumOptions}/>
+                  </Col>
+                  <Col>
+                    <InputMedium medium={medium} setMedium={setMedium} mediumOptions={mediumOptions}/>
+                  </Col>
+                </Row>
+                <InputDescription description={description} setDescription={setDescription}/>
+                <InputAlbum setSelectedAlbums={setSelectedAlbums} userAlbums={userAlbums}/>
+              </Card>
             </Col>
             <Col>
-              <InputCategory category={category} setCategory={setCategory} setMediumOptions={setMediumOptions}/>
-              <InputMedium medium={medium} setMedium={setMedium} mediumOptions={mediumOptions}/>
-              <InputAlbum setSelectedAlbums={setSelectedAlbums} userAlbums={userAlbums}/>
+            <InputImages assets={assets} setAssets={setAssets}/>
             </Col>
           </Row>
           <Form.Group className="text-center">

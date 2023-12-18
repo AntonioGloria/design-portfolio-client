@@ -1,4 +1,4 @@
-import { Card, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 const InputAlbum = (props) => {
   const { selectedAlbums, setSelectedAlbums, userAlbums } = props;
@@ -19,28 +19,22 @@ const InputAlbum = (props) => {
   }
 
   return (
-    <Card className="m-3">
-      <Form.Group controlId="album-select">
-        <Card.Header>
-          <Form.Label>Album</Form.Label>
-        </Card.Header>
-        <Card.Body>
-          <Form.Select
-            defaultValue={selectedAlbums}
-            onChange={(e) => handleSelectAlbums(e)}
-            style={{overflow:'auto'}}
-            multiple={true}
-          >
-            {userAlbums.map((album, i) =>
-              i !== 0 &&
-                <option key={album._id} value={album._id}>
-                  {album.title}
-                </option>
-            )}
-          </Form.Select>
-        </Card.Body>
-      </Form.Group>
-    </Card>
+    <Form.Group controlId="album-select" className="m-4">
+      <Form.Label>Album</Form.Label>
+      <Form.Select
+        defaultValue={selectedAlbums}
+        onChange={(e) => handleSelectAlbums(e)}
+        style={{overflow:'auto'}}
+        multiple={true}
+      >
+        {userAlbums.map((album, i) =>
+          i !== 0 &&
+            <option key={album._id} value={album._id}>
+              {album.title}
+            </option>
+        )}
+      </Form.Select>
+    </Form.Group>
   )
 }
 

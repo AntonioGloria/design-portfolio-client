@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/auth.context';
 import { Button, Card, Form, Row, Col } from 'react-bootstrap';
@@ -28,57 +28,42 @@ const ArtworkForm = (props) => {
   const [selectedAlbums, setSelectedAlbums] = useState(null);
   const [assets, setAssets] = useState([]);
 
-  const physOptions = [
-    {value: "physDrawing", text : "Drawing"},
-    {value: "physPainting", text: "Painting"},
-    {value:"physSculpture", text: "Sculpture"}
-  ];
+  const categoryMedia = useMemo(() => {
+    return {
+      physicalMedia: [
+        { value: "physDrawing", text : "Drawing" },
+        { value: "physPainting", text: "Painting" },
+        { value: "physSculpture", text: "Sculpture" }
+      ],
 
-  const digiOptions = [
-    {value: "digiDrawing", text: "Digital Drawing"},
-    {value: "digiPainting", text: "Digital Painting"},
-    {value: "digi3DArt", text: "3D Art"}
-  ];
+      digitalMedia: [
+        { value: "digiDrawing", text: "Digital Drawing" },
+        { value: "digiPainting", text: "Digital Painting" },
+        { value: "digi3DArt", text: "3D Art" }
+      ],
 
-  const photoOptions = [
-    {value: "photoPortrait", text: "Portrait"},
-    {value: "photoNature", text: "Nature"},
-    {value: "photoMacro", text: "Macro"}
-  ];
-
-  const handleMediumOptions = (choice) => {
-    setCategory(choice);
-
-    switch(choice) {
-      case "physicalMedia":
-        setMediumOptions(physOptions);
-        break;
-
-      case "digitalMedia":
-          setMediumOptions(digiOptions);
-          break;
-
-      case "photography":
-        setMediumOptions(photoOptions);
-        break;
-
-      default:
-        setMediumOptions([]);
+      photography: [
+        { value: "photoPortrait", text: "Portrait" },
+        { value: "photoNature", text: "Nature" },
+        { value: "photoMacro", text: "Macro" }
+      ],
+      "" : []
     }
-  }
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
       try {
         // Fetch and prefill artwork data if on Edit page
         if (type === "Edit") {
-          const artworkRes = await artworkService.getOne(artworkId);
+          const { data } = await artworkService.getOne(artworkId);
 
-          setTitle(artworkRes.data.title);
-          setDescription(artworkRes.data.description);
-          setAssets(artworkRes.data.assets);
-          handleMediumOptions(artworkRes.data.category);
-          setMedium(artworkRes.data.medium);
+          setTitle(data.title);
+          setDescription(data.description);
+          setAssets(data.assets);
+          setCategory(data.category)
+          setMediumOptions(categoryMedia[data.category])
+          setMedium(data.medium);
         }
 
         const res = await userService.getUserAlbums(user.username);
@@ -95,12 +80,11 @@ const ArtworkForm = (props) => {
       }
     }
     getData();
-  },[artworkId, type, user]);
+  }, [artworkId, type, user, categoryMedia]);
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      let response;
 
       const formData = {
         title,
@@ -111,13 +95,9 @@ const ArtworkForm = (props) => {
         assets
       };
 
-      if (type === "Create") {
-        response = await artworkService.create(formData);
-      }
-
-      else {
-        response = await artworkService.editArtwork(artworkId, formData);
-      }
+      const response = type === "Create"
+        ? await artworkService.create(formData)
+        : await artworkService.editArtwork(artworkId, formData);
 
       navigate(`/artworks/${response.data._id}`);
     }
@@ -143,7 +123,7 @@ const ArtworkForm = (props) => {
               <InputTitle title={title} setTitle={setTitle}/>
               <Row>
                 <Col>
-                  <InputCategory category={category} handleMediumOptions={handleMediumOptions}/>
+                  <InputCategory vars={{category, categoryMedia}} funcs={{setCategory, setMediumOptions}}/>
                 </Col>
                 <Col>
                   <InputMedium medium={medium} setMedium={setMedium} mediumOptions={mediumOptions}/>

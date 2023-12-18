@@ -1,7 +1,14 @@
 import { Form } from "react-bootstrap";
 
 const InputCategory = (props) => {
-  const { category, handleMediumOptions } = props;
+  const { vars, funcs } = props;
+  const {category, categoryMedia } = vars;
+  const {setCategory, setMediumOptions } = funcs;
+
+  const handleMediumOptions = (choice) => {
+    setCategory(choice);
+    setMediumOptions(categoryMedia[choice]);
+  }
 
   return (
     <Form.Group controlId="category-select" className="m-4">

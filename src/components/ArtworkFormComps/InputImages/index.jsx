@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Form, ProgressBar, Row, Col, Container } from "react-bootstrap";
 import filesService from '../../../services/files.service';
 import AssetPreview from "../../AssetPreview";
-import ArtworkThumbnail from "../../ArtworkThumbnail";
+import EmptySection from "../../EmptySection";
 
 const InputImages = (props) => {
   const { assets, setAssets } = props;
@@ -61,22 +61,17 @@ const InputImages = (props) => {
       }
       <Container className="m-3 text-center">
         { assets.length > 0 ?
-          <>
-            <Row>
-              {assets.map((asset, i) => {
-                return (
-                  <Col key={i} className="gx-1">
-                    <AssetPreview asset={asset} setAssets={setAssets}/>
-                  </Col>
-                )
-              })}
-            </Row>
-          </>
+          <Row>
+            {assets.map((asset, i) => {
+              return (
+                <Col key={i} className="gx-1">
+                  <AssetPreview asset={asset} setAssets={setAssets}/>
+                </Col>
+              )
+            })}
+          </Row>
           :
-          <>
-          <p className="text-center">No Images Yet</p>
-          <ArtworkThumbnail imageSrc={"https://res.cloudinary.com/dwhznw5ny/image/upload/v1702842616/design-portfolio/ui-defaults/defaultAlbum_zxv3sr.png"}/>
-          </>
+          <EmptySection item={"Images"}/>
         }
       </Container>
     </Form.Group>

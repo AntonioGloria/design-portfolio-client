@@ -28,6 +28,45 @@ const ArtworkForm = (props) => {
   const [selectedAlbums, setSelectedAlbums] = useState(null);
   const [assets, setAssets] = useState([]);
 
+  const physOptions = [
+    {value: "physDrawing", text : "Drawing"},
+    {value: "physPainting", text: "Painting"},
+    {value:"physSculpture", text: "Sculpture"}
+  ];
+
+  const digiOptions = [
+    {value: "digiDrawing", text: "Digital Drawing"},
+    {value: "digiPainting", text: "Digital Painting"},
+    {value: "digi3DArt", text: "3D Art"}
+  ];
+
+  const photoOptions = [
+    {value: "photoPortrait", text: "Portrait"},
+    {value: "photoNature", text: "Nature"},
+    {value: "photoMacro", text: "Macro"}
+  ];
+
+  const handleMediumOptions = (choice) => {
+    setCategory(choice);
+
+    switch(choice) {
+      case "physicalMedia":
+        setMediumOptions(physOptions);
+        break;
+
+      case "digitalMedia":
+          setMediumOptions(digiOptions);
+          break;
+
+      case "photography":
+        setMediumOptions(photoOptions);
+        break;
+
+      default:
+        setMediumOptions([]);
+    }
+  }
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -38,8 +77,8 @@ const ArtworkForm = (props) => {
           setTitle(artworkRes.data.title);
           setDescription(artworkRes.data.description);
           setAssets(artworkRes.data.assets);
-          setCategory(artworkRes.data.category);
-          setMedium(artworkRes.data.medium); // still needs sorting out
+          handleMediumOptions(artworkRes.data.category);
+          setMedium(artworkRes.data.medium);
         }
 
         const res = await userService.getUserAlbums(user.username);
@@ -104,7 +143,7 @@ const ArtworkForm = (props) => {
               <InputTitle title={title} setTitle={setTitle}/>
               <Row>
                 <Col>
-                  <InputCategory category={category} setCategory={setCategory} setMediumOptions={setMediumOptions}/>
+                  <InputCategory category={category} handleMediumOptions={handleMediumOptions}/>
                 </Col>
                 <Col>
                   <InputMedium medium={medium} setMedium={setMedium} mediumOptions={mediumOptions}/>

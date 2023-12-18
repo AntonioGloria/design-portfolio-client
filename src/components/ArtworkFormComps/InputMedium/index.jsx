@@ -9,7 +9,7 @@ const InputMedium = (props) => {
       <Form.Select value={medium} onChange={(e) => setMedium(e.target.value)}>
         <option value="">Choose Medium...</option>
         { mediumOptions.map(option =>
-            <option key={option.value} value={option.value}>{option.text}</option>
+          <option key={option.value} value={option.value}>{option.text}</option>
         )}
       </Form.Select>
     </Form.Group>

@@ -4,6 +4,7 @@ import { AuthContext } from '../../../context/auth.context';
 import { Button, Card, Form, Row, Col } from 'react-bootstrap';
 import userService from '../../../services/user.service';
 import artworkService from '../../../services/artwork.service';
+import Loading from "../../Loading/Loading"
 import InputTitle from '../InputTitle';
 import InputImages from '../InputImages';
 import InputDescription from '../InputDescription';
@@ -16,6 +17,7 @@ const ArtworkForm = (props) => {
   const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true)
   const [userAlbums, setUserAlbums] = useState(null);
   const [mediumOptions, setMediumOptions] = useState([]);
 
@@ -46,6 +48,8 @@ const ArtworkForm = (props) => {
 
         setUserAlbums(ownAlbums);
         setSelectedAlbums([ownAlbums[0]._id]);
+
+        setLoading(false)
       }
       catch (err) {
         console.log(err);
@@ -84,31 +88,30 @@ const ArtworkForm = (props) => {
     }
   }
 
+  if (loading) {
+    return(<Loading/>)
+  }
+
   return (
-    <> {userAlbums &&
     <Card className="w-75 m-auto mt-5 shadow">
       <Card.Header className="text-center">
         <h4>{type} Artwork</h4>
       </Card.Header>
-
       <Card.Body>
         <Form onSubmit={handleSubmit} encType="multipart/form-data">
           <Row>
             <Col>
-              <Card className="m-3">
-              <Card.Header>Artwork Information</Card.Header>
-                <InputTitle title={title} setTitle={setTitle}/>
-                <Row>
-                  <Col>
-                    <InputCategory category={category} setCategory={setCategory} setMediumOptions={setMediumOptions}/>
-                  </Col>
-                  <Col>
-                    <InputMedium medium={medium} setMedium={setMedium} mediumOptions={mediumOptions}/>
-                  </Col>
-                </Row>
-                <InputDescription description={description} setDescription={setDescription}/>
-                <InputAlbum setSelectedAlbums={setSelectedAlbums} userAlbums={userAlbums}/>
-              </Card>
+              <InputTitle title={title} setTitle={setTitle}/>
+              <Row>
+                <Col>
+                  <InputCategory category={category} setCategory={setCategory} setMediumOptions={setMediumOptions}/>
+                </Col>
+                <Col>
+                  <InputMedium medium={medium} setMedium={setMedium} mediumOptions={mediumOptions}/>
+                </Col>
+              </Row>
+              <InputDescription description={description} setDescription={setDescription}/>
+              <InputAlbum setSelectedAlbums={setSelectedAlbums} userAlbums={userAlbums}/>
             </Col>
             <Col>
             <InputImages assets={assets} setAssets={setAssets}/>
@@ -120,7 +123,6 @@ const ArtworkForm = (props) => {
         </Form>
       </Card.Body>
     </Card>
-    } </>
   );
 }
 

@@ -15,7 +15,7 @@
 .spinner > div {
   width: 36px;
   height: 36px;
-  background-color: #333;
+  background-color: #20c997;
 
   border-radius: 100%;
   display: inline-block;
@@ -24,13 +24,28 @@
 }
 
 .spinner .bounce1 {
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
 }
 
 .spinner .bounce2 {
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
+  -webkit-animation-delay: -0.4s;
+  animation-delay: -0.4s;
+}
+
+.spinner .bounce3 {
+  -webkit-animation-delay: -0.3s;
+  animation-delay: -0.3s;
+}
+
+.spinner .bounce4 {
+  -webkit-animation-delay: -0.2s;
+  animation-delay: -0.2s;
+}
+
+.spinner .bounce5 {
+  -webkit-animation-delay: -0.1s;
+  animation-delay: -0.1s;
 }
 
 @-webkit-keyframes sk-bouncedelay {

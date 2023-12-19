@@ -9,6 +9,9 @@ const Loading = () => {
         <div className="bounce3"></div>
         <div className="bounce4"></div>
         <div className="bounce5"></div>
+        <div className="bounce6"></div>
+        <div className="bounce7"></div>
+        <div className="bounce8"></div>
       </div>
     </div>
   );

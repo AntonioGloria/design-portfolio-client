@@ -64,6 +64,7 @@ const ArtworkForm = (props) => {
           setCategory(data.category)
           setMediumOptions(categoryMedia[data.category])
           setMedium(data.medium);
+          setSelectedAlbums(data.albums);
         }
 
         const res = await userService.getUserAlbums(user.username);
@@ -71,8 +72,6 @@ const ArtworkForm = (props) => {
         const { ownAlbums } = resUser;
 
         setUserAlbums(ownAlbums);
-        setSelectedAlbums([ownAlbums[0]._id]);
-
         setLoading(false)
       }
       catch (err) {
@@ -130,7 +129,7 @@ const ArtworkForm = (props) => {
                 </Col>
               </Row>
               <InputDescription description={description} setDescription={setDescription}/>
-              <InputAlbum setSelectedAlbums={setSelectedAlbums} userAlbums={userAlbums}/>
+              <InputAlbum vars={{selectedAlbums, userAlbums}} funcs={{setSelectedAlbums}}/>
             </Col>
             <Col>
             <InputImages assets={assets} setAssets={setAssets}/>

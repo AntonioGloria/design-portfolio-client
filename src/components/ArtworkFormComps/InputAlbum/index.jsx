@@ -1,16 +1,13 @@
 import { Form } from "react-bootstrap";
 
 const InputAlbum = (props) => {
-  const { selectedAlbums, setSelectedAlbums, userAlbums } = props;
+  const { vars, funcs } = props;
+  const { selectedAlbums, userAlbums } = vars;
+  const { setSelectedAlbums } = funcs;
 
   const handleSelectAlbums = (e) => {
-    const allOptions = [...e.target.children];
-
-    const selected = allOptions.filter(option => {
-      return option.selected;
-    });
-
-    const selectedValues = selected.map(selected => {
+    const { selectedOptions } = e.target;
+    const selectedValues = [...selectedOptions].map(selected => {
       return selected.value;
     });
 

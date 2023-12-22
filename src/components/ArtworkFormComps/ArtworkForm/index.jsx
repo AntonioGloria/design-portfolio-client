@@ -1,10 +1,8 @@
-import { useState, useEffect, useContext, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../context/auth.context';
 import { Button, Card, Form, Row, Col } from 'react-bootstrap';
-import userService from '../../../services/user.service';
 import artworkService from '../../../services/artwork.service';
-import Loading from "../../Loading/Loading"
+import Loading from '../../Loading/Loading'
 import InputTitle from '../InputTitle';
 import InputImages from '../InputImages';
 import InputDescription from '../InputDescription';
@@ -13,21 +11,19 @@ import InputMedium from '../InputMedium';
 import InputAlbum from '../InputAlbum';
 
 const ArtworkForm = (props) => {
-  const { type, artworkId } = props;
+  const { type, albumData, artData } = props;
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true);
   const [validated, setValidated] = useState(false)
-
-  const { user } = useContext(AuthContext);
-  const [userAlbums, setUserAlbums] = useState(null);
   const [mediumOptions, setMediumOptions] = useState([]);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [medium, setMedium] = useState("");
-  const [selectedAlbums, setSelectedAlbums] = useState(null);
+  const [selectedAlbums, setSelectedAlbums] = useState([]);
+  const [userAlbums, setUserAlbums] = useState([]);
   const [assets, setAssets] = useState([]);
 
   const categoryMedia = useMemo(() => {
@@ -54,34 +50,22 @@ const ArtworkForm = (props) => {
   }, []);
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        // Fetch and prefill artwork data if on Edit page
-        if (type === "Edit") {
-          const { data } = await artworkService.getOne(artworkId);
-
-          setTitle(data.title);
-          setDescription(data.description);
-          setAssets(data.assets);
-          setCategory(data.category)
-          setMediumOptions(categoryMedia[data.category])
-          setMedium(data.medium);
-          setSelectedAlbums(data.albums);
-        }
-
-        const res = await userService.getUserAlbums(user.username);
-        const [resUser] = res.data;
-        const { ownAlbums } = resUser;
-
-        setUserAlbums(ownAlbums);
-        setLoading(false)
-      }
-      catch (err) {
-        console.log(err);
-      }
+    if (albumData) {
+      setUserAlbums(albumData);
     }
-    getData();
-  }, [artworkId, type, user, categoryMedia]);
+
+    if (artData) {
+      setTitle(artData.title);
+      setDescription(artData.description);
+      setAssets(artData.assets);
+      setCategory(artData.category)
+      setMediumOptions(categoryMedia[artData.category])
+      setMedium(artData.medium);
+      setSelectedAlbums(artData.albums);
+    }
+
+    setLoading(false)
+  }, [albumData, artData, categoryMedia])
 
   const handleSubmit = async (e) => {
     const form = e.currentTarget;
@@ -105,7 +89,7 @@ const ArtworkForm = (props) => {
       try {
         const response = type === "Create"
           ? await artworkService.create(formData)
-          : await artworkService.editArtwork(artworkId, formData);
+          : await artworkService.editArtwork(artData._id, formData);
 
         navigate(`/artworks/${response.data._id}`);
       }

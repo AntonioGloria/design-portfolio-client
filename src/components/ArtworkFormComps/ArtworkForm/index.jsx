@@ -16,8 +16,10 @@ const ArtworkForm = (props) => {
   const { type, artworkId } = props;
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true);
+  const [validated, setValidated] = useState(false)
+
   const { user } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true)
   const [userAlbums, setUserAlbums] = useState(null);
   const [mediumOptions, setMediumOptions] = useState([]);
 
@@ -82,9 +84,15 @@ const ArtworkForm = (props) => {
   }, [artworkId, type, user, categoryMedia]);
 
   const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
+    const form = e.currentTarget;
+    e.preventDefault();
+    setValidated(true);
 
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+    }
+
+    else {
       const formData = {
         title,
         description,
@@ -94,15 +102,17 @@ const ArtworkForm = (props) => {
         assets
       };
 
-      const response = type === "Create"
-        ? await artworkService.create(formData)
-        : await artworkService.editArtwork(artworkId, formData);
+      try {
+        const response = type === "Create"
+          ? await artworkService.create(formData)
+          : await artworkService.editArtwork(artworkId, formData);
 
-      navigate(`/artworks/${response.data._id}`);
-    }
+        navigate(`/artworks/${response.data._id}`);
+      }
 
-    catch (err) {
-      console.log(err);
+      catch (error) {
+        console.log(error)
+      }
     }
   }
 
@@ -116,7 +126,7 @@ const ArtworkForm = (props) => {
         <h4>{type} Artwork</h4>
       </Card.Header>
       <Card.Body>
-        <Form onSubmit={handleSubmit} encType="multipart/form-data">
+        <Form noValidate validated={validated} onSubmit={handleSubmit} encType="multipart/form-data">
           <Row>
             <Col>
               <InputTitle title={title} setTitle={setTitle}/>
@@ -135,9 +145,11 @@ const ArtworkForm = (props) => {
             <InputImages assets={assets} setAssets={setAssets}/>
             </Col>
           </Row>
-          <Form.Group className="text-center">
-            <Button variant="primary" type="submit">{type} Artwork</Button>
-          </Form.Group>
+          <Row>
+            <Col className='text-center'>
+              <Button variant="primary" type="submit">{type} Artwork</Button>
+            </Col>
+          </Row>
         </Form>
       </Card.Body>
     </Card>

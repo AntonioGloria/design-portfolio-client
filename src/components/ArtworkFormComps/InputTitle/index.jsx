@@ -4,9 +4,10 @@ const InputTitle = (props) => {
   const { title, setTitle } = props;
 
   return (
-    <Form.Group controlId="title-text" className="m-4">
+    <Form.Group controlId="title-text" className="m-4 position-relative">
       <Form.Label>Title</Form.Label>
-      <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+      <Form.Control required type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+      <Form.Control.Feedback tooltip type="invalid">Required</Form.Control.Feedback>
     </Form.Group>
   )
 }

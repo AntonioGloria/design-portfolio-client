@@ -11,14 +11,15 @@ const InputCategory = (props) => {
   }
 
   return (
-    <Form.Group controlId="category-select" className="m-4">
+    <Form.Group controlId="category-select" className="m-4 position-relative">
       <Form.Label>Category</Form.Label>
-      <Form.Select value={category} onChange={(e) => handleMediumOptions(e.target.value)}>
+      <Form.Select required value={category} onChange={(e) => handleMediumOptions(e.target.value)}>
         <option value="">Choose Category...</option>
         <option value="physicalMedia">Physical Media</option>
         <option value="digitalMedia">Digital Media</option>
         <option value="photography">Photography</option>
       </Form.Select>
+      <Form.Control.Feedback tooltip type="invalid">Required</Form.Control.Feedback>
     </Form.Group>
   )
 }

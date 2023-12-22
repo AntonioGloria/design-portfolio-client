@@ -4,14 +4,15 @@ const InputMedium = (props) => {
   const { medium, setMedium, mediumOptions } = props;
 
   return (
-    <Form.Group controlId="medium-select" className="m-4">
+    <Form.Group controlId="medium-select" className="m-4 position-relative">
       <Form.Label>Medium</Form.Label>
-      <Form.Select value={medium} onChange={(e) => setMedium(e.target.value)}>
+      <Form.Select required value={medium} onChange={(e) => setMedium(e.target.value)}>
         <option value="">Choose Medium...</option>
         { mediumOptions.map(option =>
           <option key={option.value} value={option.value}>{option.text}</option>
         )}
       </Form.Select>
+      <Form.Control.Feedback tooltip type="invalid">Required</Form.Control.Feedback>
     </Form.Group>
   )
 }

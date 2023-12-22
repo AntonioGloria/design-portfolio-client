@@ -5,7 +5,7 @@ import AssetPreview from "../../AssetPreview";
 import EmptySection from "../../EmptySection";
 
 const InputImages = (props) => {
-  const { assets, setAssets } = props;
+  const { assets, setAssets, validated } = props;
 
   const [progressBar, setProgressBar] = useState(0);
   const [uploadStart, setUploadStart] = useState(false);
@@ -38,9 +38,10 @@ const InputImages = (props) => {
   }
 
   return (
-    <Form.Group controlId="assets-file" className="m-4">
+    <>
+    <Form.Group controlId="assets-file" className="m-4 position-relative">
       <Form.Label>{"Upload Artwork Image(s)"}</Form.Label>
-      <Form.Control type="file" multiple onChange={handleAssetUploads}/>
+      <Form.Control type="file" multiple onChange={handleAssetUploads} isInvalid={assets.length === 0 && validated}/>
       { uploadStart &&
         <div className="mt-3">
           <p className="mb-1 text-center">
@@ -59,22 +60,24 @@ const InputImages = (props) => {
           />
         </div>
       }
-      <Container className="m-3 text-center">
-        { assets.length > 0 ?
-          <Row>
-            {assets.map((asset, i) => {
-              return (
-                <Col key={i} className="gx-1">
-                  <AssetPreview asset={asset} setAssets={setAssets}/>
-                </Col>
-              )
-            })}
-          </Row>
-          :
-          <EmptySection item={"Images"}/>
-        }
-      </Container>
+      <Form.Control.Feedback tooltip type="invalid">You must add at least 1 image!</Form.Control.Feedback>
     </Form.Group>
+    <Container className="m-3 text-center">
+      { assets.length > 0 ?
+        <Row>
+          {assets.map((asset, i) => {
+            return (
+              <Col key={i} className="gx-1">
+                <AssetPreview asset={asset} setAssets={setAssets}/>
+              </Col>
+            )
+          })}
+        </Row>
+        :
+        <EmptySection item={"Images"}/>
+      }
+    </Container>
+    </>
   )
 }
 

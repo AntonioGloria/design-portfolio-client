@@ -2,12 +2,11 @@ import { CloseButton } from "react-bootstrap";
 import Artworkthumbnail from "../ArtworkThumbnail";
 
 const AssetPreview = (props) => {
-  const { asset, setAssets } = props;
+  const { asset, setAssets, setDeleteAssets } = props;
 
   const handleDeleteAsset = (asset) => {
-    setAssets(prev => {
-      return prev.filter(item => item !== asset);
-    });
+    setAssets(prev => prev.filter(item => item !== asset));
+    setDeleteAssets(prev => [...prev, asset]);
   }
 
   return (

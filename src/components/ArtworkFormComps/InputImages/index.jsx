@@ -5,7 +5,7 @@ import AssetPreview from "../../AssetPreview";
 import EmptySection from "../../EmptySection";
 
 const InputImages = (props) => {
-  const { assets, setAssets, validated } = props;
+  const { assets, setAssets, setDeleteAssets, validated } = props;
 
   const [progressBar, setProgressBar] = useState(0);
   const [uploadStart, setUploadStart] = useState(false);
@@ -68,7 +68,7 @@ const InputImages = (props) => {
           {assets.map((asset, i) => {
             return (
               <Col key={i} className="gx-1">
-                <AssetPreview asset={asset} setAssets={setAssets}/>
+                <AssetPreview asset={asset} setAssets={setAssets} setDeleteAssets={setDeleteAssets}/>
               </Col>
             )
           })}

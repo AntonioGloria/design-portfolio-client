@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, Form, Row, Col } from 'react-bootstrap';
 import artworkService from '../../../services/artwork.service';
+import filesService from '../../../services/files.service';
 import Loading from '../../Loading/Loading'
 import InputTitle from '../InputTitle';
 import InputImages from '../InputImages';
@@ -25,6 +26,7 @@ const ArtworkForm = (props) => {
   const [selectedAlbums, setSelectedAlbums] = useState([]);
   const [userAlbums, setUserAlbums] = useState([]);
   const [assets, setAssets] = useState([]);
+  const [deleteAssets, setDeleteAssets] = useState([]);
 
   const categoryMedia = useMemo(() => {
     return {
@@ -91,6 +93,10 @@ const ArtworkForm = (props) => {
           ? await artworkService.create(formData)
           : await artworkService.editArtwork(artData._id, formData);
 
+        if (deleteAssets.length > 0) {
+          await filesService.deleteImageMulti(deleteAssets);
+        }
+
         navigate(`/artworks/${response.data._id}`);
       }
 
@@ -126,7 +132,7 @@ const ArtworkForm = (props) => {
               <InputAlbum vars={{selectedAlbums, userAlbums}} funcs={{setSelectedAlbums}}/>
             </Col>
             <Col>
-            <InputImages assets={assets} setAssets={setAssets} validated={validated}/>
+            <InputImages assets={assets} setAssets={setAssets} setDeleteAssets={setDeleteAssets} validated={validated}/>
             </Col>
           </Row>
           <Row>

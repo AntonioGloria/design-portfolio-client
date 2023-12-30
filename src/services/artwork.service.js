@@ -52,6 +52,11 @@ class ArtworkService {
   deleteOne = async (id) => {
     return this.api.delete(`/artworks/${id}/delete`);
   }
+
+  // Verify if artwork belongs to authenticated user
+  verifyOwnership = async (artworkId) => {
+    return this.api.get(`/artworks/${artworkId}/verifyOwnership`);
+  }
 }
 
 // Create one instance of the service

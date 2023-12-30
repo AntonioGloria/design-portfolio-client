@@ -118,7 +118,7 @@ function Navbar() {
                   &emsp;View Profile
                 </Link>
                 <Link
-                  to={`/${user.username}/edit-profile`}
+                  to={"/edit-profile"}
                   className="dropdown-item">
                   <i className="fa-solid fa-pen-to-square"></i>
                   &emsp;Edit Profile

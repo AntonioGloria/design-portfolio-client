@@ -6,7 +6,7 @@ import artworkService from '../../services/artwork.service';
 import ArtworkForm from '../../components/ArtworkFormComps/ArtworkForm';
 
 const EditArtworkPage = () => {
-  const { _id } = useParams();
+  const { artworkId } = useParams();
   const { user } = useContext(AuthContext);
   const [artData, setArtData] = useState(null)
   const [albumData, setAlbumData] = useState(null);
@@ -17,7 +17,7 @@ const EditArtworkPage = () => {
         const userAlbumsRes = await userService.getUserAlbums(user.username);
         const [resUser] = userAlbumsRes.data;
         const { ownAlbums } = resUser;
-        const artRes = await artworkService.getOne(_id);
+        const artRes = await artworkService.getOne(artworkId);
 
         setAlbumData(ownAlbums);
         setArtData(artRes.data);
@@ -28,7 +28,7 @@ const EditArtworkPage = () => {
     }
 
     getData();
-  }, [_id, user]);
+  }, [artworkId, user]);
 
   return (
     <ArtworkForm type={"Edit"} albumData={albumData} artData={artData}/>

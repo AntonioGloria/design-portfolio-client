@@ -1,14 +1,25 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
 import { Navigate, useParams } from "react-router-dom";
+import artworkService from "../../services/artwork.service";
 import Loading from "../Loading/Loading";
 
 function IsPrivate({ children }) {
-  const { isLoggedIn, isLoading, user } = useContext(AuthContext);
-  const { username } = useParams();
+  const { artworkId } = useParams();
+  const { isLoggedIn, isLoading } = useContext(AuthContext);
 
-  /*console.log("param: ",username);
-  console.log("auth: ",user.username);*/
+  const [isArtworkOwner, setIsArtworkOwner] = useState(null);
+
+  useEffect(() => {
+    if (artworkId) {
+      checkArtworkOwnership(artworkId)
+    }
+  }, [artworkId])
+
+  const checkArtworkOwnership = async (id) => {
+    const response = await artworkService.verifyOwnership(id)
+    setIsArtworkOwner(response.data);
+  }
 
   // If the authentication is still loading ⏳
   if (isLoading) {
@@ -20,10 +31,11 @@ function IsPrivate({ children }) {
     return <Navigate to="/login" />;
   }
 
-  if (username !== user.username) {
-    // If trying to navigate to another user's edit page, send user to home page ❌
-    return <Navigate to="/" />;
+  if (isArtworkOwner === false) {
+    // If trying to edit another user's artwork, send user to home page ❌
+    return <Navigate to={`/artworks/${artworkId}`} />;
   }
+
   // If the user is logged in, allow to see the page ✅
   return children;
 }

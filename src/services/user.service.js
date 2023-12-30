@@ -35,8 +35,8 @@ class UserService {
   }
 
   // PUT update /:username
-  updateOne = async (username, requestBody) => {
-    return this.api.put(`/users/${username}/edit-profile`, requestBody);
+  updateOne = async (requestBody) => {
+    return this.api.put(`/users/edit-profile`, requestBody);
   }
 }
 

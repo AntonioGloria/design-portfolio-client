@@ -59,7 +59,7 @@ const EditProfilePage = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      await userService.updateOne(username, {
+      await userService.updateOne({
         avatar: avatarUrl,
         coverImg: coverUrl,
         tagline: newTagline,

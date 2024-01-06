@@ -131,7 +131,7 @@ const ArtworkForm = (props) => {
               <InputDescription description={description} setDescription={setDescription}/>
               <InputAlbum vars={{selectedAlbums, userAlbums}} funcs={{setSelectedAlbums}}/>
             </Col>
-            <Col>
+            <Col xl={8}>
             <InputImages assets={assets} setAssets={setAssets} setDeleteAssets={setDeleteAssets} validated={validated}/>
             </Col>
           </Row>

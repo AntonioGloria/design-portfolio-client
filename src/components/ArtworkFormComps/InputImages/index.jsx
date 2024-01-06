@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, ProgressBar, Row, Col, Container } from "react-bootstrap";
+import { Form, ProgressBar } from "react-bootstrap";
 import filesService from '../../../services/files.service';
 import AssetPreview from "../../AssetPreview";
 import EmptySection from "../../EmptySection";
@@ -41,7 +41,13 @@ const InputImages = (props) => {
     <>
     <Form.Group controlId="assets-file" className="m-4 position-relative">
       <Form.Label>{"Upload Artwork Image(s)"}</Form.Label>
-      <Form.Control type="file" multiple onChange={handleAssetUploads} isInvalid={assets.length === 0 && validated}/>
+      { !uploadStart &&
+        <>
+          <Form.Control type="file" multiple onChange={handleAssetUploads} isInvalid={assets.length === 0 && validated}/>
+          <Form.Control.Feedback tooltip type="invalid">You must add at least 1 image!</Form.Control.Feedback>
+        </>
+      }
+
       { uploadStart &&
         <div className="mt-3">
           <p className="mb-1 text-center">
@@ -60,23 +66,12 @@ const InputImages = (props) => {
           />
         </div>
       }
-      <Form.Control.Feedback tooltip type="invalid">You must add at least 1 image!</Form.Control.Feedback>
     </Form.Group>
-    <Container className="m-3 text-center">
       { assets.length > 0 ?
-        <Row>
-          {assets.map((asset, i) => {
-            return (
-              <Col key={i} className="gx-1">
-                <AssetPreview asset={asset} setAssets={setAssets} setDeleteAssets={setDeleteAssets}/>
-              </Col>
-            )
-          })}
-        </Row>
+        <AssetPreview assets={assets} setAssets={setAssets} setDeleteAssets={setDeleteAssets}/>
         :
         <EmptySection item={"Images"}/>
       }
-    </Container>
     </>
   )
 }

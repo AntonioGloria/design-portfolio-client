@@ -1,8 +1,8 @@
-import { CloseButton } from "react-bootstrap";
+import { CloseButton, Container, Row, Col } from "react-bootstrap";
 import Artworkthumbnail from "../ArtworkThumbnail";
 
 const AssetPreview = (props) => {
-  const { asset, setAssets, setDeleteAssets } = props;
+  const { assets, setAssets, setDeleteAssets } = props;
 
   const handleDeleteAsset = (asset) => {
     setAssets(prev => prev.filter(item => item !== asset));
@@ -10,18 +10,27 @@ const AssetPreview = (props) => {
   }
 
   return (
-    <div className="text-start" style={{width:"248px", height:"248px"}}>
-      <Artworkthumbnail imageSrc={asset}/>
-      <CloseButton
-        onClick={() => handleDeleteAsset(asset)}
-        className="bg-danger border border-dark rounded-circle p-2"
-        style={{
-          position: "relative",
-          top:"-240px",
-          left:"205px"
-        }}
-      />
-    </div>
+    <Container>
+      <Row xl={4}>
+        {assets.map((asset, i) => {
+          return (
+            <Col key={i} className="gx-1">
+              <div className="position-relative">
+                <Artworkthumbnail imageSrc={asset}/>
+                <CloseButton
+                  onClick={() => handleDeleteAsset(asset)}
+                  className="bg-danger rounded-circle p-2 position-absolute"
+                  style={{
+                    top:"5px",
+                    right:"-12.5px"
+                  }}
+                />
+              </div>
+            </Col>
+          )
+        })}
+      </Row>
+    </Container>
   )
 }
 

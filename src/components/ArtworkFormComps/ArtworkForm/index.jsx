@@ -66,6 +66,10 @@ const ArtworkForm = (props) => {
       setSelectedAlbums(artData.albums);
     }
 
+    else if (albumData && !artData) {
+      setSelectedAlbums(albumData[0]);
+    }
+
     setLoading(false)
   }, [albumData, artData, categoryMedia])
 

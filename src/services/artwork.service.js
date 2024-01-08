@@ -1,22 +1,8 @@
-import axios from 'axios';
+import serviceConfig from "./config.service";
 
 class ArtworkService {
-  constructor() {
-    this.api = axios.create({
-      baseURL: process.env.REACT_APP_SERVER_URL || "http://localhost:5005"
-    });
-
-    // Automatically set JWT token in the headers for every request
-    this.api.interceptors.request.use((config) => {
-      // Retrieve the JWT token from the local storage
-      const storedToken = localStorage.getItem("authToken");
-
-      if (storedToken) {
-        config.headers = { Authorization: `Bearer ${storedToken}` };
-      }
-
-      return config;
-    });
+  constructor(config) {
+    this.api = config;
   }
 
   // GET all artworks
@@ -59,7 +45,5 @@ class ArtworkService {
   }
 }
 
-// Create one instance of the service
-const artworkService = new ArtworkService();
-
+const artworkService = new ArtworkService(serviceConfig);
 export default artworkService;

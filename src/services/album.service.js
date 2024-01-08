@@ -1,22 +1,8 @@
-import axios from "axios";
+import serviceConfig from "./config.service";
 
 class AlbumService {
-  constructor() {
-    this.api = axios.create({
-      baseURL: process.env.REACT_APP_SERVER_URL || "http://localhost:5005"
-    });
-
-    // Automatically set JWT token in the headers for every request
-    this.api.interceptors.request.use((config) => {
-      // Retrieve the JWT token from the local storage
-      const storedToken = localStorage.getItem("authToken");
-
-      if (storedToken) {
-        config.headers = { Authorization: `Bearer ${storedToken}` };
-      }
-
-      return config;
-    });
+  constructor(config) {
+    this.api = config;
   }
 
   // GET all albums
@@ -40,7 +26,5 @@ class AlbumService {
   }
 }
 
-// Create one instance of the service
-const albumService = new AlbumService();
-
+const albumService = new AlbumService(serviceConfig);
 export default albumService;

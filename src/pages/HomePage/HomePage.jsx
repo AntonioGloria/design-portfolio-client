@@ -1,6 +1,7 @@
 import "./HomePage.css";
 import JutsuLogo from "../../assets/img/JutsuLogo.svg"
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import artworkService from "../../services/artwork.service";
 import { Container, Row, Col } from "react-bootstrap";
 import ArtworkThumbnail from "../../components/ArtworkThumbnail";
@@ -32,10 +33,12 @@ function HomePage() {
       </header>
       <Container>
         <Row xs={"auto"}>
-          { artworks.map(artwork => {
+          { artworks.map(({_id, assets}) => {
             return (
-              <Col key={artwork._id}>
-                <ArtworkThumbnail imageSrc={artwork.assets[0]}/>
+              <Col key={_id}>
+                <Link to={`/artworks/${_id}`}>
+                  <ArtworkThumbnail imageSrc={assets[0]}/>
+                </Link>
               </Col>
             )
           })}

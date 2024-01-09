@@ -34,7 +34,11 @@ const CreateAlbumForm = (props) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <Button type="submit">
+        <Button
+          type="submit"
+          disabled={title.length === 0}
+          variant={title.length === 0 ? "secondary" : "primary"}
+        >
           <i className="fa-solid fa-folder-plus"/>
           &nbsp;&nbsp;Create Album
         </Button>

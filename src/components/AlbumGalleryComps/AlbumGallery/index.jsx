@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { AuthContext } from '../../../context/auth.context';
 import AlbumCard from '../AlbumCard';
-import AlbumCardControls from "../AlbumCardControls";
 import CreateAlbumForm from '../CreateAlbumForm';
 import DeleteModal from "../../DeleteModal";
 
@@ -36,15 +35,10 @@ const AlbumGallery = (props) => {
                   <AlbumCard
                     album={album}
                     path={`/${user}/${type}/${album._id}`}
-                  >
-                    {isLoggedIn && user===loggedUser.username &&
-                      <AlbumCardControls
-                        album={album}
-                        setManageAlbum={setManageAlbum}
-                        setShowModal={setShowModal}
-                      />
-                    }
-                  </AlbumCard>
+                    setManageAlbum={setManageAlbum}
+                    setShowModal={setShowModal}
+                    userIsOwner={isLoggedIn && user===loggedUser.username}
+                  />
                 </Col>
               )}
             </Row>

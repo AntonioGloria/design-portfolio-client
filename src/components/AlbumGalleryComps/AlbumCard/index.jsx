@@ -1,13 +1,40 @@
 import { Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
+import { Card, Button, Form, InputGroup } from "react-bootstrap";
+import AlbumCardControls from "../AlbumCardControls";
+import { useState } from "react";
+import albumService from "../../../services/album.service";
 
 const AlbumCard = (props) => {
-  const { album, path, children } = props;
+  const { album, path, userIsOwner, setManageAlbum, setShowModal } = props;
   const { title, thumbnail } = album;
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentTitle, setCurrentTitle] = useState(title);
+  const [newTitle, setNewTitle] = useState(title);
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await albumService.renameOne(album._id, { title: newTitle });
+      setCurrentTitle(newTitle);
+      setIsEditing(false);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Card className="shadow text-center" style={{width:"200px"}}>
-      {album.title!=="All" && album.title!=="Favorites" && children}
+      {album.title!=="All" && album.title!=="Favorites" && userIsOwner &&
+      <AlbumCardControls
+        album={album}
+        setManageAlbum={setManageAlbum}
+        setShowModal={setShowModal}
+        setIsEditing={setIsEditing}
+        setCurrentTitle={setCurrentTitle}
+      />
+      }
       <Link
         to={path}
         state={{gallery: album}}
@@ -16,10 +43,19 @@ const AlbumCard = (props) => {
         <Card.Img
           src={thumbnail}
         />
-        <Card.Footer>
-          {title}
-        </Card.Footer>
-      </Link>
+        </Link>
+        { isEditing ?
+          <Form className="position-relative">
+            <InputGroup>
+              <Form.Control value={newTitle} onChange={(e) => setNewTitle(e.target.value)}/>
+              <Button id="album-title" onClick={handleEdit}><i className="fa-solid fa-check"></i></Button>
+            </InputGroup>
+          </Form>
+          :
+          <Card.Footer className="user-select-none">
+            {currentTitle}
+          </Card.Footer>
+        }
     </Card>
   )
 }

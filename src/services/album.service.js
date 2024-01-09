@@ -20,6 +20,11 @@ class AlbumService {
     return this.api.post("/albums/create", requestBody);
   }
 
+  // Rename album
+  renameOne = async (albumId, requestBody) => {
+    return this.api.patch(`/albums/${albumId}/rename`, requestBody);
+  }
+
   // Delete album
   deleteAlbum = async (id) => {
     return this.api.delete(`/albums/${id}/delete`);

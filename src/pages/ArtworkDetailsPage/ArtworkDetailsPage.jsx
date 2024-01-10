@@ -6,11 +6,13 @@ import artworkService from '../../services/artwork.service';
 import ArtworkDisplay from '../../components/ArtworkDetailsComps/ArtworkDisplay';
 import ArtworkSidePanel from '../../components/ArtworkDetailsComps/ArtworkSidePanel';
 import DeleteModal from '../../components/DeleteModal';
+import Loading from '../../components/Loading/Loading';
 
 const ArtworkDetailsPage = () => {
   const { isLoggedIn, user } = useContext(AuthContext);
   const { _id } = useParams();
   const [artData, setArtData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -20,6 +22,7 @@ const ArtworkDetailsPage = () => {
       try {
         const res = await artworkService.getOne(_id);
         setArtData(res.data);
+        setIsLoading(false);
       }
       catch (err) {
         console.log(err);
@@ -28,48 +31,47 @@ const ArtworkDetailsPage = () => {
     getArtData();
   }, [_id]);
 
+  if (isLoading) {
+    return <Loading/>
+  }
+
 
   return (
-    <>
-    {!artData && <p>NOTHING HERE</p>}
-    {artData &&
-      <Container fluid>
-        <Row>
-          <Col className="bg-black">
-            <ArtworkDisplay artData={artData}/>
-          </Col>
-          <Col className="bg-dark">
-            <ArtworkSidePanel artData={artData}/>
-            {isLoggedIn && artData?.creator?.username===user.username &&
-            <>
-              <hr/>
-              <h5 className='text-center mb-3'>Manage Project</h5>
-              <div className='d-flex justify-content-around'>
-                <Link to={`/artworks/${_id}/edit`}>
-                  <Button variant='warning'>
-                    <i className="fa-solid fa-pen-to-square"/>
-                    &nbsp;Edit Project
-                  </Button>
-                </Link>
-                <Button variant='danger' onClick={openModal}>
-                  <i className="fa-solid fa-trash-can"/>
-                  &nbsp;Delete Project
+    <Container fluid>
+      <Row>
+        <Col className="bg-black">
+          <ArtworkDisplay artData={artData}/>
+        </Col>
+        <Col className="bg-dark">
+          <ArtworkSidePanel artData={artData}/>
+          {isLoggedIn && artData.creator.username===user.username &&
+          <>
+            <hr/>
+            <h5 className='text-center mb-3'>Manage Project</h5>
+            <div className='d-flex justify-content-around'>
+              <Link to={`/artworks/${_id}/edit`}>
+                <Button variant='warning'>
+                  <i className="fa-solid fa-pen-to-square"/>
+                  &nbsp;Edit Project
                 </Button>
-              </div>
-              <DeleteModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                id={_id}
-                type={"project"}
-                data={artData}
-              />
-            </>
-            }
-          </Col>
-        </Row>
-      </Container>
-    }
-    </>
+              </Link>
+              <Button variant='danger' onClick={openModal}>
+                <i className="fa-solid fa-trash-can"/>
+                &nbsp;Delete Project
+              </Button>
+            </div>
+            <DeleteModal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              id={_id}
+              type={"project"}
+              data={artData}
+            />
+          </>
+          }
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

@@ -1,3 +1,4 @@
+import "./style.css";
 import { Carousel } from "react-bootstrap";
 
 const ArtworkDisplay = (props) => {
@@ -6,7 +7,6 @@ const ArtworkDisplay = (props) => {
 
   return (
     <Carousel
-      className="position-relative top-50 start-50 translate-middle"
       interval={null}
       slide={false}
       controls={assets.length < 2 ? false : true}
@@ -17,10 +17,10 @@ const ArtworkDisplay = (props) => {
         return (
           <Carousel.Item key={title+i}>
             <img
-              className="d-block m-auto position-relative"
+              className="d-block position-absolute top-50 start-50 translate-middle"
               src={asset}
               alt={title+i}
-              style={{height:"70vh", objectFit: "fill"}}
+              style={{height:"75vh", objectFit: "fill"}}
             />
           </Carousel.Item>
         )

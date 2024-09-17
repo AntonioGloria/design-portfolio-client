@@ -10,10 +10,8 @@ const CreateArtworkPage = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const userAlbumsRes = await userService.getUserAlbums(user.username);
-        const [resUser] = userAlbumsRes.data;
-        const { ownAlbums } = resUser;
-        setAlbumData(ownAlbums);
+        const userAlbumsRes = await userService.getUserAlbums(user.username, "albums");
+        setAlbumData(userAlbumsRes.data);
       }
       catch (err) {
         console.log(err);

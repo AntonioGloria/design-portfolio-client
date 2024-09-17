@@ -14,12 +14,10 @@ const EditArtworkPage = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const userAlbumsRes = await userService.getUserAlbums(user.username);
-        const [resUser] = userAlbumsRes.data;
-        const { ownAlbums } = resUser;
+        const userAlbumsRes = await userService.getUserAlbums(user.username, "albums");
         const artRes = await artworkService.getOne(artworkId);
 
-        setAlbumData(ownAlbums);
+        setAlbumData(userAlbumsRes.data);
         setArtData(artRes.data);
       }
       catch (err) {

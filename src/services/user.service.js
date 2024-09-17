@@ -15,9 +15,19 @@ class UserService {
     return this.api.get(`/users/${username}`);
   }
 
-  // GET /:username/albums
-  getUserAlbums = async (username) => {
-    return this.api.get(`/users/${username}/albums`);
+  // GET /:username/albums/:albumType
+  getUserAlbums = async (username, albumType) => {
+    return this.api.get(`/users/${username}/albums/${albumType}`);
+  }
+
+  // GET /:username/artworks
+  getUserArtworks = async (username) => {
+    return this.api.get(`/users/${username}/artworks/`);
+  }
+
+  // GET /:username/favorites
+  getUserFavorites = async (username) => {
+    return this.api.get(`/users/${username}/favorites/`);
   }
 
   // PUT update /:username

@@ -47,10 +47,6 @@ function ProfilePage() {
         bio={details.bio}
         email={details.email}
         createdAt={details.createdAt}
-        ownArtworks={details.ownArtworks}
-        ownAlbums={details.ownAlbums}
-        favArtworks={details.favArtworks}
-        favCollections={details.favCollections}
       />
     </>
   );

@@ -3,10 +3,10 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import albumService from "../../../services/album.service";
 
 const CreateAlbumForm = (props) => {
-  const { creator, albums, setAlbums, type } = props;
+  const { albums, setAlbums, albumType } = props;
   const [title, setTitle] = useState("");
 
-  const typeTxt = type[0].toUpperCase() + type.slice(1, -1);
+  const typeTxt = albumType[0].toUpperCase() + albumType.slice(1, -1);
 
   const handleSubmit = async (e) => {
     try {
@@ -14,7 +14,7 @@ const CreateAlbumForm = (props) => {
 
       const newAlbum = await albumService.create({
         title,
-        creator
+        albumType
       });
 
       setAlbums([...albums, newAlbum.data]);

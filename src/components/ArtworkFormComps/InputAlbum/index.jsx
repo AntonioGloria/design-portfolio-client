@@ -11,7 +11,6 @@ const InputAlbum = (props) => {
       return selected.value;
     });
 
-    selectedValues.unshift(userAlbums[0]._id);
     setSelectedAlbums(selectedValues);
   }
 
@@ -24,11 +23,10 @@ const InputAlbum = (props) => {
         style={{overflow:'auto'}}
         multiple={true}
       >
-        {userAlbums.map((album, i) =>
-          i !== 0 &&
-            <option key={album._id} value={album._id}>
-              {album.title}
-            </option>
+        {userAlbums.map(album =>
+          <option key={album._id} value={album._id}>
+            {album.title}
+          </option>
         )}
       </Form.Select>
     </Form.Group>

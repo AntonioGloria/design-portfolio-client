@@ -4,7 +4,7 @@ import moment from "moment";
 
 const ArtworkSidePanel = (props) => {
   const { artData } = props;
-  const { creator, title, description, category, medium, createdAt } = artData;
+  const { creator, title, description, category, medium, createdAt, likes } = artData;
 
   return (
     <div className="p-3 pt-5">
@@ -26,6 +26,10 @@ const ArtworkSidePanel = (props) => {
       <Link to={`/artworks?category=${category}&medium=${medium}`}>
         <Badge bg={"secondary"}>{medium}</Badge>
       </Link>
+      <p className="text-muted mt-3">
+        <i className="fa-solid fa-heart me-1"/>
+        {likes.length}
+      </p>
     </div>
   )
 }

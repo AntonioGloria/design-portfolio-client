@@ -3,8 +3,10 @@ import { AuthContext } from '../../context/auth.context';
 import { Row, Col, Container, Button } from 'react-bootstrap';
 import { useParams, Link } from "react-router-dom";
 import artworkService from '../../services/artwork.service';
+import userService from '../../services/user.service';
 import ArtworkDisplay from '../../components/ArtworkDetailsComps/ArtworkDisplay';
 import ArtworkSidePanel from '../../components/ArtworkDetailsComps/ArtworkSidePanel';
+import AddToFavorites from '../../components/ArtworkDetailsComps/AddToFavorites';
 import DeleteModal from '../../components/DeleteModal';
 import Loading from '../../components/Loading/Loading';
 
@@ -14,14 +16,30 @@ const ArtworkDetailsPage = () => {
   const [artData, setArtData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [userFavorites, setUserFavorites] = useState([]);
+  const [userIsOwner, setUserIsOwner] = useState(false);
 
   const openModal = () => setShowModal(true);
 
   useEffect(() => {
     const getArtData = async () => {
       try {
-        const res = await artworkService.getOne(_id);
-        setArtData(res.data);
+        const resArtDetails = await artworkService.getOne(_id);
+
+        if (isLoggedIn) {
+          const { username } = user;
+          const resIsOwner = await artworkService.verifyOwnership(_id);
+
+          if (!resIsOwner.data) {
+            const resUserFavs = await userService.getUserAlbums(username, "favorites");
+            setUserFavorites(resUserFavs.data);
+          }
+
+          else {
+            setUserIsOwner(resIsOwner.data);
+          }
+        }
+        setArtData(resArtDetails.data);
         setIsLoading(false);
       }
       catch (err) {
@@ -29,12 +47,11 @@ const ArtworkDetailsPage = () => {
       }
     }
     getArtData();
-  }, [_id]);
+  }, [_id, isLoggedIn, user]);
 
   if (isLoading) {
     return <Loading/>
   }
-
 
   return (
     <Container fluid>
@@ -44,7 +61,7 @@ const ArtworkDetailsPage = () => {
         </Col>
         <Col className="bg-dark">
           <ArtworkSidePanel artData={artData}/>
-          {isLoggedIn && artData.creator.username===user.username &&
+          {userIsOwner &&
           <>
             <hr/>
             <h5 className='text-center mb-3'>Manage Project</h5>
@@ -68,6 +85,15 @@ const ArtworkDetailsPage = () => {
               data={artData}
             />
           </>
+          }
+
+          {isLoggedIn && !userIsOwner &&
+            <AddToFavorites
+              favAlbums={userFavorites}
+              artData={artData}
+              setArtData={setArtData}
+              user={user}
+            />
           }
         </Col>
       </Row>

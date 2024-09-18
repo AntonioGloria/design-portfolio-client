@@ -43,6 +43,16 @@ class ArtworkService {
   verifyOwnership = async (artworkId) => {
     return this.api.get(`/artworks/${artworkId}/verifyOwnership`);
   }
+
+  // PATCH Add user to artworks' likes
+  addToFavs = async (artworkId) => {
+    return this.api.patch(`/artworks/${artworkId}/addToFavs`);
+  }
+
+  // PATCH Remove user from artworks' likes
+  removeFromFavs = async (artworkId) => {
+    return this.api.patch(`/artworks/${artworkId}/removeFromFavs`);
+  }
 }
 
 const artworkService = new ArtworkService(serviceConfig);

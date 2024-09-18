@@ -53,6 +53,16 @@ class ArtworkService {
   removeFromFavs = async (artworkId) => {
     return this.api.patch(`/artworks/${artworkId}/removeFromFavs`);
   }
+
+  // PATCH Add artwork to user's favorite album
+  addToFavAlbum = async (artworkId, albumId) => {
+    return this.api.patch(`/artworks/${artworkId}/addToFavAlbum/${albumId}`);
+  }
+
+  // PATCH Remove artwork from user's favorite album
+  removeFromFavAlbum = async (artworkId, albumId) => {
+    return this.api.patch(`/artworks/${artworkId}/removeFromFavAlbum/${albumId}`);
+  }
 }
 
 const artworkService = new ArtworkService(serviceConfig);

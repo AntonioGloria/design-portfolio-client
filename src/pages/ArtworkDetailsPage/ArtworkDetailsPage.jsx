@@ -89,7 +89,8 @@ const ArtworkDetailsPage = () => {
 
           {isLoggedIn && !userIsOwner &&
             <AddToFavorites
-              favAlbums={userFavorites}
+              userFavorites={userFavorites}
+              setUserFavorites={setUserFavorites}
               artData={artData}
               setArtData={setArtData}
               user={user}

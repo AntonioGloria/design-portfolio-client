@@ -10,7 +10,7 @@ const AlbumCardControls = (props) => {
 
   return (
     <DropdownButton
-      className="position-absolute"
+      className="position-absolute z-1"
       variant="secondary"
       menuVariant="dark"
       drop="bottom"

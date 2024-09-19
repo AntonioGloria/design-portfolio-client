@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import albumService from "../../../services/album.service";
 import { Card, Button, Form, InputGroup } from "react-bootstrap";
 import AlbumCardControls from "../AlbumCardControls";
-import { useState } from "react";
-import albumService from "../../../services/album.service";
+import AlbumPreview from "../AlbumPreview";
 
 const AlbumCard = (props) => {
   const { album, path, userIsOwner, setManageAlbum, setShowModal } = props;
@@ -27,35 +28,33 @@ const AlbumCard = (props) => {
   return (
     <Card className="shadow text-center" style={{width:"200px"}}>
       {album.title!=="All" && album.title!=="Favorites" && userIsOwner &&
-      <AlbumCardControls
-        album={album}
-        setManageAlbum={setManageAlbum}
-        setShowModal={setShowModal}
-        setIsEditing={setIsEditing}
-        setCurrentTitle={setCurrentTitle}
-      />
+        <AlbumCardControls
+          album={album}
+          setManageAlbum={setManageAlbum}
+          setShowModal={setShowModal}
+          setIsEditing={setIsEditing}
+          setCurrentTitle={setCurrentTitle}
+        />
       }
       <Link
         to={path}
         state={{gallery: album}}
         className="text-decoration-none"
       >
-        <Card.Img
-          src={thumbnail}
-        />
-        </Link>
-        { isEditing ?
-          <Form className="position-relative">
-            <InputGroup>
-              <Form.Control value={newTitle} onChange={(e) => setNewTitle(e.target.value)}/>
-              <Button id="album-title" onClick={handleEdit}><i className="fa-solid fa-check"></i></Button>
-            </InputGroup>
-          </Form>
-          :
-          <Card.Footer className="user-select-none">
-            {currentTitle}
-          </Card.Footer>
-        }
+      <AlbumPreview album={album} thumbnail={thumbnail}/>
+      </Link>
+      {isEditing ?
+        <Form className="position-relative">
+          <InputGroup>
+            <Form.Control value={newTitle} onChange={(e) => setNewTitle(e.target.value)}/>
+            <Button id="album-title" onClick={handleEdit}><i className="fa-solid fa-check"></i></Button>
+          </InputGroup>
+        </Form>
+        :
+        <Card.Footer className="user-select-none">
+          {currentTitle}
+        </Card.Footer>
+      }
     </Card>
   )
 }

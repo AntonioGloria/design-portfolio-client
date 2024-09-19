@@ -54,10 +54,10 @@ const AlbumGallery = (props) => {
       />
     }
 
-    <Container className="mt-4">
-      <Row className="gy-4">
+    <Container className="mt-4" fluid style={{width: "95.2vw"}}>
+      <Row className="row-cols-auto g-3">
         {albums.map(album =>
-          <Col key={album._id} className="gx-1">
+          <Col key={album._id}>
             <AlbumCard
               album={album}
               path={`/${user}/${albumType}/${album._id}`}

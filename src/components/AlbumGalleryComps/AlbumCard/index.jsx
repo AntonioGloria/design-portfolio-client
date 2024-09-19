@@ -26,7 +26,7 @@ const AlbumCard = (props) => {
   }
 
   return (
-    <Card className="shadow text-center" style={{width:"200px"}}>
+    <Card className="shadow text-center" style={{width:"11vw"}}>
       {album.title!=="All" && album.title!=="Favorites" && userIsOwner &&
         <AlbumCardControls
           album={album}

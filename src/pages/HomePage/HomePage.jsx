@@ -31,9 +31,10 @@ function HomePage() {
         <img src={JutsuLogo} alt="jutsu-logo"/>
         <h1 className="text-muted">The Place to Show and Grow Your Craft</h1>
       </header>
-      <Container>
-        <Row xs={"auto"}>
-          { artworks.map(({_id, assets}) => {
+      <Container fluid style={{width: "95.2vw"}}>
+        <h1 className="fs-2">Browse the latest works!</h1>
+        <Row className="row-cols-auto g-3">
+          {artworks.map(({_id, assets}) => {
             return (
               <Col key={_id}>
                 <Link to={`/artworks/${_id}`}>

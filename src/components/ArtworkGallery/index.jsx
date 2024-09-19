@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Thumbnail from '../ArtworkThumbnail';
 
@@ -10,13 +11,17 @@ const ArtworkGallery = () => {
   return (
     <div className="text-center">
       <h1>{title}</h1>
-      <div className='d-flex justify-content-center'>
-      {artworks?.map(({assets, _id}) =>
-        <Link key={_id} to={`/artworks/${_id}`}>
-          <Thumbnail imageSrc={assets[0]}/>
-        </Link>
-      )}
-      </div>
+      <Container fluid style={{width: "95.2vw"}}>
+        <Row className="row-cols-auto g-3">
+          {artworks.map(({assets, _id}) =>
+            <Col key={_id}>
+              <Link to={`/artworks/${_id}`}>
+                <Thumbnail imageSrc={assets[0]}/>
+              </Link>
+            </Col>
+          )}
+        </Row>
+      </Container>
     </div>
   );
 }

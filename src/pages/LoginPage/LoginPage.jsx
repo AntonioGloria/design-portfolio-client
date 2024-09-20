@@ -3,21 +3,16 @@ import { useState, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import authService from "../../services/auth.service";
-
-import { Button, Form, FormGroup, Toast, Overlay, Card } from "react-bootstrap";
+import { Button, Form, FormGroup, Card } from "react-bootstrap";
 import AuthFormSide from "../../components/AuthFormSide";
+import ErrorToast from "../../components/ErrorToast";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(undefined);
+  const [errorMsg, setErrorMsg] = useState(undefined);
   const [showError, setShowError] = useState(false);
   const target = useRef(null);
-
-  const toggleShowError = () => {
-    setShowError(!showError);
-    setErrorMessage(undefined);
-  }
 
   const navigate = useNavigate();
 
@@ -50,7 +45,7 @@ function LoginPage() {
       .catch((error) => {
         // If the request resolves with an error, set the error message in the state
         const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
+        setErrorMsg(errorDescription);
       });
   };
 
@@ -92,15 +87,16 @@ function LoginPage() {
         </Card.Body>
       </Card>
 
-      {errorMessage &&
-        <Overlay target={target.current} show={showError} placement="bottom">
-          <Toast bg="danger" show={showError} onClose={toggleShowError}>
-            <Toast.Header>
-              <strong className="me-auto">Log-In Error</strong>
-            </Toast.Header>
-            <Toast.Body>{errorMessage}</Toast.Body>
-          </Toast>
-        </Overlay>
+      {errorMsg &&
+        <ErrorToast
+          target={target}
+          title="Log-In Error"
+          placement="bottom"
+          msg={errorMsg}
+          setMsg={setErrorMsg}
+          show={showError}
+          setShow={setShowError}
+        />
       }
     </div>
   );

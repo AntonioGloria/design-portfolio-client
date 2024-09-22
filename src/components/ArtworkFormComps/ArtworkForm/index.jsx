@@ -1,8 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, Form, Row, Col } from 'react-bootstrap';
 import artworkService from '../../../services/artwork.service';
 import filesService from '../../../services/files.service';
+import categoryMedia from "../../../assets/categoryMedia.json";
 import Loading from '../../Loading/Loading'
 import InputTitle from '../InputTitle';
 import InputImages from '../InputImages';
@@ -28,29 +29,6 @@ const ArtworkForm = (props) => {
   const [assets, setAssets] = useState([]);
   const [deleteAssets, setDeleteAssets] = useState([]);
 
-  const categoryMedia = useMemo(() => {
-    return {
-      physicalMedia: [
-        { value: "physDrawing", text : "Drawing" },
-        { value: "physPainting", text: "Painting" },
-        { value: "physSculpture", text: "Sculpture" }
-      ],
-
-      digitalMedia: [
-        { value: "digiDrawing", text: "Digital Drawing" },
-        { value: "digiPainting", text: "Digital Painting" },
-        { value: "digi3DArt", text: "3D Art" }
-      ],
-
-      photography: [
-        { value: "photoPortrait", text: "Portrait" },
-        { value: "photoNature", text: "Nature" },
-        { value: "photoMacro", text: "Macro" }
-      ],
-      "" : []
-    }
-  }, []);
-
   useEffect(() => {
     if (albumData) {
       setUserAlbums(albumData);
@@ -71,7 +49,7 @@ const ArtworkForm = (props) => {
     }
 
     setLoading(false)
-  }, [albumData, artData, categoryMedia])
+  }, [albumData, artData])
 
   const handleSubmit = async (e) => {
     const form = e.currentTarget;

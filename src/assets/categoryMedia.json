@@ -1,0 +1,42 @@
+[
+    {
+        "icon": "",
+        "value": "",
+        "label": "Choose Category",
+        "media": []
+    },
+
+    {
+        "icon": "fa-solid fa-paintbrush",
+        "value": "physicalMedia",
+        "label": "Physical Media",
+        "media": [
+            { "value": "physDrawing", "label" : "Drawing" },
+            { "value": "physPainting", "label": "Painting" },
+            { "value": "physSculpture", "label": "Sculpture" }
+        ]
+    },
+
+    {
+        "icon": "fa-solid fa-computer",
+        "value": "digitalMedia",
+        "label": "Digital Media",
+        "media": [
+            { "value": "digiDrawing", "label": "Digital Drawing" },
+            { "value": "digiPainting", "label": "Digital Painting" },
+            { "value": "digi3DArt", "label": "3D Art" }
+        ]
+    },
+
+    {
+        "icon": "fa-solid fa-camera",
+        "value": "photography",
+        "label": "Photography",
+        "media": [
+            { "value": "photoPortrait", "label": "Portrait" },
+            { "value": "photoNature", "label": "Nature" },
+            { "value": "photoMacro", "label": "Macro" },
+            { "value": "photoLandscape", "label": "Landscape" }
+        ]
+    }
+]

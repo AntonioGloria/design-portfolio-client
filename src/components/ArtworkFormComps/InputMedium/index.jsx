@@ -9,7 +9,7 @@ const InputMedium = (props) => {
       <Form.Select required value={medium} onChange={(e) => setMedium(e.target.value)}>
         <option value="">Choose Medium...</option>
         { mediumOptions.map(option =>
-          <option key={option.value} value={option.value}>{option.text}</option>
+          <option key={option.value} value={option.value}>{option.label}</option>
         )}
       </Form.Select>
       <Form.Control.Feedback tooltip type="invalid">Required</Form.Control.Feedback>

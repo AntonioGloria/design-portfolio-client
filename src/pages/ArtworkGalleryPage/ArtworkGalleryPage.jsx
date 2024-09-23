@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import ArtworkThumbnail from '../../components/ArtworkThumbnail';
 import artworkService from "../../services/artwork.service";
+import { Container, Row, Col } from 'react-bootstrap';
+import ArtworkThumbnail from '../../components/ArtworkThumbnail';
+import EmptySection from "../../components/EmptySection";
 
 const parseCategory = categoryQuery => {
   const words = categoryQuery.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
@@ -37,19 +39,25 @@ const ArtworkGalleryPage = () => {
 
   return (
     <div className='text-center'>
-        {category && medium &&
-          <h1>{`Browsing ${parseCategory(category)} > ${parseMedium(medium)}`}</h1>
-        }
-        {category && !medium &&
-          <h1>{`Browsing ${parseCategory(category)}`}</h1>
-        }
-        <div className='d-flex justify-content-center'>
-      {artworks?.map(({assets, _id}) =>
-        <Link key={_id} to={`/artworks/${_id}`}>
-          <ArtworkThumbnail imageSrc={assets[0]}/>
-        </Link>
-      )}
-      </div>
+      {category &&
+        <h1 className='my-4'>
+          {`Browsing ${parseCategory(category)}`} { medium && `> ${parseMedium(medium)}`}
+        </h1>
+      }
+
+      {artworks.length === 0 && <EmptySection item="Artworks"/>}
+
+      <Container fluid style={{width: "95.2vw"}}>
+        <Row className="row-cols-auto g-3">
+        {artworks?.map(({assets, _id}) =>
+          <Col key={_id}>
+          <Link to={`/artworks/${_id}`}>
+            <ArtworkThumbnail imageSrc={assets[0]}/>
+          </Link>
+          </Col>
+        )}
+        </Row>
+      </Container>
     </div>
   )
 }

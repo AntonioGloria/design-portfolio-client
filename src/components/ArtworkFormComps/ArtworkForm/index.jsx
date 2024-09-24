@@ -35,17 +35,14 @@ const ArtworkForm = (props) => {
     }
 
     if (artData) {
+      const { media } = categoryMedia.find(cat => cat.value === artData.category);
       setTitle(artData.title);
       setDescription(artData.description);
       setAssets(artData.assets);
       setCategory(artData.category)
-      setMediumOptions(categoryMedia[artData.category])
+      setMediumOptions(media);
       setMedium(artData.medium);
       setSelectedAlbums(artData.albums);
-    }
-
-    else if (albumData && !artData) {
-      setSelectedAlbums(albumData[0]);
     }
 
     setLoading(false)

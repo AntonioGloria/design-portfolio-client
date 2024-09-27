@@ -11,24 +11,18 @@ const AssetPreview = (props) => {
 
   return (
     <Container>
-      <Row xl={4}>
-        {assets.map((asset, i) => {
-          return (
-            <Col key={i} className="gx-1">
-              <div className="position-relative">
-                <Artworkthumbnail imageSrc={asset}/>
-                <CloseButton
-                  onClick={() => handleDeleteAsset(asset)}
-                  className="bg-danger rounded-circle p-2 position-absolute"
-                  style={{
-                    top:"5px",
-                    right:"-12.5px"
-                  }}
-                />
-              </div>
-            </Col>
-          )
-        })}
+      <Row className="row-cols-auto g-3 mt-3">
+        {assets.map((asset, i) =>
+          <Col key={i}>
+            <div className="position-relative">
+              <Artworkthumbnail imageSrc={asset}/>
+              <CloseButton
+                onClick={() => handleDeleteAsset(asset)}
+                className="bg-danger rounded-circle p-2 position-absolute top-0 start-100 translate-middle"
+              />
+            </div>
+          </Col>
+        )}
       </Row>
     </Container>
   )

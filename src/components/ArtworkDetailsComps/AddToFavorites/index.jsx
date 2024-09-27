@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import artworkService from '../../../services/artwork.service';
-import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Button, Dropdown, ButtonGroup, Form } from 'react-bootstrap';
 
 const AddToFavorites = (props) => {
   const { userFavorites, setUserFavorites, artData, setArtData, user } = props;
@@ -58,38 +58,32 @@ const AddToFavorites = (props) => {
 
   return (
     <div className="text-center">
-    <Dropdown as={ButtonGroup} autoClose={false}>
-      <Button onClick={submitToggleFavs}>
-        {isLiked
-          ? <><i className="fa-solid fa-heart me-2"/>Remove</>
-          : <><i className="fa-regular fa-heart me-2"/>Add</>
-        }
-      </Button>
-      {userFavorites.length > 0 &&
-        <>
-          <Dropdown.Toggle id="favorites-dropdown"></Dropdown.Toggle>
-          <Dropdown.Menu align="end" variant="dark">
-            <Dropdown.Header>Add to your Collections</Dropdown.Header>
-            {userFavorites.map(album => {
-              return (
-                <Dropdown.Item
-                  key={album._id}
-                  value={album._id}
-                  as="button"
-                  onClick={submitToggleFavAlbum}
-                >
-                  {album.artworks.some(art => art._id === artData._id)
-                    ? <i className="fa-solid fa-square-check me-2 text-primary"/>
-                    : <i className="fa-regular fa-square me-2 text-primary"/>
-                  }
-                  {album.title}
+      <Dropdown as={ButtonGroup} autoClose={false}>
+        <Button onClick={submitToggleFavs}>
+          {isLiked
+            ? <><i className="fa-solid fa-heart me-2"/>Remove</>
+            : <><i className="fa-regular fa-heart me-2"/>Add</>
+          }
+        </Button>
+        {userFavorites.length > 0 &&
+          <>
+            <Dropdown.Toggle id="favorites-dropdown"></Dropdown.Toggle>
+            <Dropdown.Menu align="end" variant="dark">
+              <Dropdown.Header>Add to your Collections</Dropdown.Header>
+              {userFavorites.map(({ _id, title, artworks }) =>
+                <Dropdown.Item key={_id} as="div">
+                  <Form.Check
+                    value={_id}
+                    label={title}
+                    onClick={submitToggleFavAlbum}
+                    checked={artworks.some(art => art._id === artData._id)}
+                  />
                 </Dropdown.Item>
-              )
-            })}
-          </Dropdown.Menu>
-        </>
-      }
-    </Dropdown>
+              )}
+            </Dropdown.Menu>
+          </>
+        }
+      </Dropdown>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { Form } from "react-bootstrap";
+import { Card, Form } from "react-bootstrap";
 
 const InputAlbum = (props) => {
   const { vars, funcs } = props;
@@ -6,30 +6,35 @@ const InputAlbum = (props) => {
   const { setSelectedAlbums } = funcs;
 
   const handleSelectAlbums = (e) => {
-    const { selectedOptions } = e.target;
-    const selectedValues = [...selectedOptions].map(selected => {
-      return selected.value;
-    });
+    const { value } = e.target;
+    let newSelection;
 
-    setSelectedAlbums(selectedValues);
+    selectedAlbums.includes(value)
+      ? newSelection = selectedAlbums.filter(album => album !== value)
+      : newSelection = [...selectedAlbums, value]
+
+      setSelectedAlbums(newSelection);
   }
 
   return (
-    <Form.Group controlId="album-select" className="m-4">
+    <div className="m-4 h-25">
       <Form.Label>Album</Form.Label>
-      <Form.Select
-        defaultValue={selectedAlbums}
-        onChange={(e) => handleSelectAlbums(e)}
-        style={{overflow:'auto'}}
-        multiple={true}
-      >
-        {userAlbums.map(album =>
-          <option key={album._id} value={album._id}>
-            {album.title}
-          </option>
-        )}
-      </Form.Select>
-    </Form.Group>
+      <Card className="bg-secondary p-2 h-75 overflow-y-auto">
+      {userAlbums.map(album =>{
+        const selected = selectedAlbums.includes(album._id);
+        return (
+          <Form.Check
+            key={album._id}
+            className={selected && "bg-dark bg-opacity-25"}
+            value={album._id}
+            label={album.title}
+            checked={selected}
+            onChange={(e) => handleSelectAlbums(e)}
+          />
+        )
+      })}
+      </Card>
+    </div>
   )
 }
 

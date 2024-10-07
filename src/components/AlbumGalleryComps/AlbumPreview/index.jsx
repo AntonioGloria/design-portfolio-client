@@ -1,10 +1,11 @@
-import { Card, Container, Row, Col, Ratio } from "react-bootstrap"
+import { Card, Container, Row, Col, Ratio } from "react-bootstrap";
+import makeThumbnail from "../../../makeThumbnail";
 
 const AlbumPreview = (props) => {
   const { album, thumbnail } = props;
   const { artworks } = album;
 
-  const imgSrcs = artworks.slice(0, 4).map(artwork => artwork.assets[0]);
+  const imgSrcs = artworks.slice(0, 4).map(artwork => makeThumbnail(artwork.assets[0]));
 
   if (imgSrcs.length === 0 || imgSrcs.length === 3) {
     imgSrcs.push(thumbnail);

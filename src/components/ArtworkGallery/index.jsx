@@ -3,6 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Thumbnail from '../ArtworkThumbnail';
 import EmptySection from "../EmptySection";
+import makeThumbnail from "../../makeThumbnail";
 
 const ArtworkGallery = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ const ArtworkGallery = () => {
           {artworks.map(({assets, _id}) =>
             <Col key={_id}>
               <Link to={`/artworks/${_id}`}>
-                <Thumbnail imageSrc={assets[0]}/>
+                <Thumbnail imageSrc={makeThumbnail(assets[0])}/>
               </Link>
             </Col>
           )}

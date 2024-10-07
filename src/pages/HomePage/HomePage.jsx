@@ -6,6 +6,7 @@ import artworkService from "../../services/artwork.service";
 import { Container, Row, Col } from "react-bootstrap";
 import ArtworkThumbnail from "../../components/ArtworkThumbnail";
 import Loading from "../../components/Loading/Loading";
+import makeThumbnail from "../../makeThumbnail";
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +39,7 @@ function HomePage() {
             return (
               <Col key={_id}>
                 <Link to={`/artworks/${_id}`}>
-                  <ArtworkThumbnail imageSrc={assets[0]}/>
+                  <ArtworkThumbnail imageSrc={makeThumbnail(assets[0])}/>
                 </Link>
               </Col>
             )

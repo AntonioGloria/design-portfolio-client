@@ -4,6 +4,7 @@ import artworkService from "../../services/artwork.service";
 import { Container, Row, Col } from 'react-bootstrap';
 import ArtworkThumbnail from '../../components/ArtworkThumbnail';
 import EmptySection from "../../components/EmptySection";
+import makeThumbnail from '../../makeThumbnail';
 
 const parseCategory = categoryQuery => {
   const words = categoryQuery.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
@@ -49,10 +50,10 @@ const ArtworkGalleryPage = () => {
 
       <Container fluid style={{width: "95.2vw"}}>
         <Row className="row-cols-auto g-3">
-        {artworks?.map(({assets, _id}) =>
+        {artworks.map(({assets, _id}) =>
           <Col key={_id}>
           <Link to={`/artworks/${_id}`}>
-            <ArtworkThumbnail imageSrc={assets[0]}/>
+            <ArtworkThumbnail imageSrc={makeThumbnail(assets[0])}/>
           </Link>
           </Col>
         )}
